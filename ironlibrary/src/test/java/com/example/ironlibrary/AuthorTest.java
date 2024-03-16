@@ -14,7 +14,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 
 @SpringBootTest
-@EqualsAndHashCode
 class AuthorTest {
 
     @Autowired
@@ -39,9 +38,8 @@ class AuthorTest {
     @Test
     public void createAuthor(){
         Optional<Author> authorFound = authorRepository.findById(author.getAuthorId());
-        assertEquals(author.getAuthorId(),authorFound.get().getAuthorId());
-        assertEquals(author.getName(),authorFound.get().getName());
-        assertEquals(author.getEmail(),authorFound.get().getEmail());
+        assertTrue(authorFound.isPresent());
+        assertEquals(author,authorFound.get());
     }
 
 
