@@ -17,6 +17,6 @@ jobs:
           with:
             java-version: '21'
         - name: Build
-          run: mvn --batch-mode -DskipTests package
+          run: -f ironlibrary/ clean compile
         - name: Test
-          run: mvn clean test /ironlibrary/pom.xml
+          run: mvn clean test
