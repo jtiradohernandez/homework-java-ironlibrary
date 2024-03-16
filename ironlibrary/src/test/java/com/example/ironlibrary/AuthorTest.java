@@ -1,5 +1,7 @@
-package com.example.ironlibrary.model;
+package com.example.ironlibrary;
 
+import com.example.ironlibrary.model.Author;
+import com.example.ironlibrary.model.Book;
 import com.example.ironlibrary.repository.AuthorRepository;
 import lombok.EqualsAndHashCode;
 import org.junit.jupiter.api.*;
