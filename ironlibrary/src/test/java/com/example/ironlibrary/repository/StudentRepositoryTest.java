@@ -20,8 +20,8 @@ class StudentRepositoryTest {
 
     @BeforeEach
     void setUp() {
-//        student = new Student("avcbdhdhd", "Juan");
-//        student = studentRepository.save(student);
+        student = new Student("avcbdhdhd", "Juan");
+        student = studentRepository.save(student);
     }
 
     @AfterEach
@@ -30,10 +30,10 @@ class StudentRepositoryTest {
         studentRepository.flush();
     }
 
-//    @Test
-//    void findByName() {
-//        Optional<Student> student = studentRepository.findByName("Juan");
-//        assertTrue(student.isPresent());
-//        assertEquals("Juan", student.get().getName());
-//    }
+    @Test
+    void findByName() {
+        Optional<Student> student = studentRepository.findByName("Juan");
+        assertTrue(student.isPresent());
+        assertEquals("Juan", student.get().getName());
+    }
 }
