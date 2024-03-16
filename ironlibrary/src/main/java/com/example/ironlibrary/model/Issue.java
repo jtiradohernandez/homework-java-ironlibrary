@@ -29,12 +29,10 @@ public class Issue implements InputValidator {
         return true;
     }
 
-    // Assuming Student and Book
-    // To be uncommented and used later.
-    // @OneToOne
-    // private Student issueStudent;
-    // @OneToOne
-    // private Book issueBook;
+    @OneToOne
+    private Student issueStudent;
+    @OneToOne
+    private Book issueBook;
 }
 
 
