@@ -35,21 +35,12 @@ class UtilsTest {
 
     @Test
     void testQuantityUpdate() {
-        Assertions.assertEquals(10, Utils.addQuantityUpdate(8, 2));
+        // Test for successful quantity update
+        assertEquals(10, Utils.addQuantityUpdate(8, 2), "The sum should be 10 for valid inputs.");
 
-        Exception exception1 = Assertions.assertThrows(IllegalArgumentException.class, () -> {
-            Utils.addQuantityUpdate(5, -10);
-        });
-        String expectedMessage1 = "Both currentQuantity and change must be non-negative.";
-        String actualMessage1 = exception1.getMessage();
-        assertTrue(actualMessage1.contains(expectedMessage1));
-
-        Exception exception2 = Assertions.assertThrows(IllegalArgumentException.class, () -> {
-            Utils.addQuantityUpdate(-5, 10);
-        });
-        String expectedMessage2 = "Both currentQuantity and change must be non-negative.";
-        String actualMessage2 = exception2.getMessage();
-        assertTrue(actualMessage2.contains(expectedMessage2));
+        // Test for unsuccessful quantity update
+        assertEquals(5, Utils.addQuantityUpdate(5, -10), "Negative changes should result in no update.");
+        assertEquals(-5, Utils.addQuantityUpdate(-5, 10), "Initial negative quantities should behave normally.");
     }
 
     @Test

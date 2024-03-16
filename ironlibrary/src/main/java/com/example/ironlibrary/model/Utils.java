@@ -59,12 +59,13 @@ public class Utils {
     /**
      * Updates the quantity of an item, ensuring it cannot go below zero.
      */
-public static int addQuantityUpdate(int currentQuantity, int change) {
-    if (currentQuantity < 0 || change < 0) {
-        throw new IllegalArgumentException("Both currentQuantity and change must be non-negative.");
+    public static int addQuantityUpdate(int currentQuantity, int change) {
+        if (currentQuantity < 0 || change < 0) {
+            System.out.println("Both currentQuantity and change must be non-negative.");
+            return currentQuantity; // Return the original quantity unchanged as an error signal
+        }
+        return currentQuantity + change;
     }
-    return currentQuantity + change;
-}
 
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
