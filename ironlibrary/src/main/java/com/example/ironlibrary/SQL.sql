@@ -12,8 +12,15 @@ category enum('HORROR',
     'FANTASY',
     'ADVENTURE',
     'BIOGRAPHY',
-    'MISTERY',
+    'MYSTERY',
     'OTHERS'),
 quantity int not null,
 primary key(isbn)
+);
+
+CREATE TABLE Issue (
+    issueId INT AUTO_INCREMENT NOT NULL,
+    issueDate VARCHAR(255) NOT NULL,
+    returnDate VARCHAR(255) NOT NULL,
+    PRIMARY KEY(issueId)
 );
