@@ -17,6 +17,6 @@ jobs:
           with:
             java-version: '21'
         - name: Build
-          run: -f ironlibrary/ clean compile
+          run: -f /ironlibrary/ clean compile
         - name: Test
           run: mvn clean test
