@@ -19,4 +19,4 @@ jobs:
         - name: Build
           run: mvn -f ironlibrary/pom.xml  clean compile
         - name: Test
-          run: mvn clean test
+          run: mvn -f ironlibrary/pom.xml clean test
