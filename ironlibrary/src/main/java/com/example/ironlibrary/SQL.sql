@@ -24,3 +24,9 @@ CREATE TABLE Issue (
     returnDate VARCHAR(255) NOT NULL,
     PRIMARY KEY(issueId)
 );
+
+CREATE TABLE student (
+	usn VARCHAR(255) NOT NULL,
+    name VARCHAR(255) NOT NULL,
+    PRIMARY KEY (usn)
+    );
