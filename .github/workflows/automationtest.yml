@@ -19,4 +19,4 @@ jobs:
         - name: Build
           run: mvn --batch-mode -DskipTests package
         - name: Test
-          run: mvn clean test
+          run: mvn clean test /ironlibrary/pom.xml
