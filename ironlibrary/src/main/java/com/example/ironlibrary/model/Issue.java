@@ -1,19 +1,26 @@
 package com.example.ironlibrary.model;
 
-import lombok.AllArgsConstructor;
+import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+@Entity
 @Getter
 @Setter
-@AllArgsConstructor
-public class Issue implements InputValidator{
+@NoArgsConstructor  // Generates a no-args constructor for JPA
+public class Issue implements InputValidator {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int issueId;
     private String issueDate;
     private String returnDate;
-    // To be used later.
-    //private Student issueStudent;
-    //private Book issueBook;
+
+    // Constructor without issueId
+    public Issue(String issueDate, String returnDate) {
+        this.issueDate = issueDate;
+        this.returnDate = returnDate;
+    }
 
     @Override
     public boolean input_validation() {
@@ -22,4 +29,13 @@ public class Issue implements InputValidator{
         return true;
     }
 
+    // Assuming Student and Book
+    // To be uncommented and used later.
+    // @OneToOne
+    // private Student issueStudent;
+    // @OneToOne
+    // private Book issueBook;
 }
+
+
+
