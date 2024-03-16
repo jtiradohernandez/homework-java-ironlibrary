@@ -17,6 +17,6 @@ jobs:
           with:
             java-version: '21'
         - name: Build
-          run: mvn -f /ironlibrary clean compile
+          run: mvn -f ironlibrary/pom.xml  clean compile
         - name: Test
           run: mvn clean test
