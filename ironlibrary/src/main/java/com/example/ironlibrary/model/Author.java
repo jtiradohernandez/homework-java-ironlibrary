@@ -13,7 +13,7 @@ import java.util.Objects;
 @NoArgsConstructor
 @Entity
 @Table(name = "author")
-public class Author {
+public class Author implements InputValidator {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int authorId;
