@@ -1,9 +1,11 @@
 package com.example.ironlibrary.model;
 
+import java.sql.SQLOutput;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.time.temporal.ChronoUnit;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -64,32 +66,53 @@ public static int addQuantityUpdate(int currentQuantity, int change) {
     return currentQuantity + change;
 }
 
+    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
     /**
-     * Calculates the difference in days between two dates.
+     * Validates if the provided date string follows the "dd/MM/yyyy" format.
+     *
+     * @param date the date string to validate.
+     * @return true if the date is in the correct format, false otherwise.
      */
-    public static long dateDifferenceCalculator(String startDate, String endDate) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    public static boolean validateDateFormat(String date) {
         try {
-            LocalDate start = LocalDate.parse(startDate, formatter);
-            LocalDate end = LocalDate.parse(endDate, formatter);
-            return ChronoUnit.DAYS.between(start, end);
+            LocalDate.parse(date, formatter);
+            return true; // Date was successfully parsed, indicating valid format
         } catch (DateTimeParseException e) {
-            throw new IllegalArgumentException("Invalid date format. Please use 'dd/mm/yyyy'.");
+            return false; // Parsing failed, indicating invalid format
         }
     }
 
     /**
-     * Displays data in a structured format.
-     * This is a placeholder for what could be a more complex data presentation utility.
+     * Calculates the difference in days between two dates provided in "dd/MM/yyyy" format.
+     * Assumes both dates have been validated and are in the correct format.
+     *
+     * @param startDate the start date in "dd/MM/yyyy" format.
+     * @param endDate the end date in "dd/MM/yyyy" format.
+     * @return an Optional containing the difference in days between the start and end dates,
+     *         or an empty Optional if either date is in an invalid format.
      */
-    public static void dataDisplay(Object data) {
-        System.out.println(data.toString());
+    public static Optional<Long> dateDifferenceCalculator(String startDate, String endDate) {
+        if (!validateDateFormat(startDate) || !validateDateFormat(endDate)) {
+            // If either date is in invalid format, return an empty Optional
+            return Optional.empty();
+        }
+
+        LocalDate start = LocalDate.parse(startDate, formatter);
+        LocalDate end = LocalDate.parse(endDate, formatter);
+        long daysBetween = ChronoUnit.DAYS.between(start, end);
+
+        return Optional.of(daysBetween);
     }
 
-    /**
-     * Generates a unique identifier, for example, for use with entities that don't have an auto-generated ID.
-     */
-    public static String uniqueIdGenerator() {
-        return UUID.randomUUID().toString();
-    }
+
+
+
+
+        /**
+         * Generates a unique identifier, for example, for use with entities that don't have an auto-generated ID.
+         */
+        public static String uniqueIdGenerator() {
+            return UUID.randomUUID().toString();
+        }
 }
