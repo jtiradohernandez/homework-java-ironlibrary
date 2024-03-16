@@ -31,15 +31,28 @@ class UtilsTest {
 
     @Test
     void testQuantityUpdate() {
-        Assertions.assertEquals(10, Utils.quantityUpdate(8, 2));
-        Assertions.assertEquals(0, Utils.quantityUpdate(5, -10));
+        Assertions.assertEquals(10, Utils.addQuantityUpdate(8, 2));
+
+        Exception exception1 = Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            Utils.addQuantityUpdate(5, -10);
+        });
+        String expectedMessage1 = "Both currentQuantity and change must be non-negative.";
+        String actualMessage1 = exception1.getMessage();
+        Assertions.assertTrue(actualMessage1.contains(expectedMessage1));
+
+        Exception exception2 = Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            Utils.addQuantityUpdate(-5, 10);
+        });
+        String expectedMessage2 = "Both currentQuantity and change must be non-negative.";
+        String actualMessage2 = exception2.getMessage();
+        Assertions.assertTrue(actualMessage2.contains(expectedMessage2));
     }
 
     @Test
     void testDateDifferenceCalculator() {
-        Assertions.assertEquals(1, Utils.dateDifferenceCalculator("2023-01-01", "2023-01-02"));
-        Assertions.assertEquals(-1, Utils.dateDifferenceCalculator("2023-01-02", "2023-01-01"));
-    }
+        Assertions.assertEquals(1, Utils.dateDifferenceCalculator("01/01/2023", "02/01/2023"));
+        Assertions.assertEquals(-1, Utils.dateDifferenceCalculator("02/01/2023", "01/01/2023"));
+}
 
     // Assuming Utils.dataDisplay() only prints the data, no need to unit test as it doesn't return any value.
     // Instead, focus on methods with clear input/output behaviors.
