@@ -1,6 +1,12 @@
 # Default ignored files
 /shelf/
 /workspace.xml
-
+/compiler.xml
+/encodings.xml
+/homework-java-ironlibrary.iml
+/jarRepositories.xml
+/misc.xml
+/modules.xml
+/vcs.xml
 
 
