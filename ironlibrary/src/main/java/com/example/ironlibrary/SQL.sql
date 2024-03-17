@@ -27,7 +27,7 @@ CREATE TABLE library.author(
     FOREIGN KEY (author_book) REFERENCES library.book(isbn)
 );
 
-CREATE TABLE Issue (
+CREATE TABLE issue (
     issueId INT AUTO_INCREMENT NOT NULL,
     issueDate VARCHAR(255) NOT NULL,
     returnDate VARCHAR(255) NOT NULL,

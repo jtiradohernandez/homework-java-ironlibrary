@@ -21,7 +21,7 @@ public class Author implements InputValidator {
     private String email;
 
     @OneToOne
-    @JoinColumn(name="book_id")
+    @JoinColumn(name="author_book")
     private Book authorBook;
 
     public Author(String name, String email, Book authorBook) {
