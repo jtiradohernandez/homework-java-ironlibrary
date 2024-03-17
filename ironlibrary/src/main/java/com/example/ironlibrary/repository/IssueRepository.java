@@ -6,7 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface IssueRepository extends JpaRepository<Issue, Integer> {
-
-    // List<Issue> findByIssueStudent_StudentId(Integer studentId);
-
+    Issue findByIssueId(int issueId);
 }

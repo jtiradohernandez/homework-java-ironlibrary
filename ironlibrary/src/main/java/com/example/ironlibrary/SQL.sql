@@ -3,7 +3,6 @@ create schema library;
 use library;
 
 create table book(
-id int AUTO_INCREMENT not null,
 isbn varchar(64) not null,
 title varchar(255) not null,
 category enum('HORROR',
@@ -13,10 +12,10 @@ category enum('HORROR',
     'FANTASY',
     'ADVENTURE',
     'BIOGRAPHY',
-    'MISTERY',
+    'MYSTERY',
     'OTHERS'),
 quantity int not null,
-primary key(id)
+primary key(isbn)
 );
 
 CREATE TABLE library.author(
@@ -26,7 +25,17 @@ CREATE TABLE library.author(
     author_book VARCHAR(255),
     PRIMARY KEY (author_id),
     FOREIGN KEY (author_book) REFERENCES library.book(isbn)
-    );
+);
 
+CREATE TABLE Issue (
+    issueId INT AUTO_INCREMENT NOT NULL,
+    issueDate VARCHAR(255) NOT NULL,
+    returnDate VARCHAR(255) NOT NULL,
+    PRIMARY KEY(issueId)
+);
 
-
+CREATE TABLE student (
+	usn VARCHAR(255) NOT NULL,
+    name VARCHAR(255) NOT NULL,
+    PRIMARY KEY (usn)
+);

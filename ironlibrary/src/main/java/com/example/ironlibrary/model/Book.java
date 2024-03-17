@@ -14,11 +14,9 @@ import java.util.Objects;
 @Table(name = "book")
 public class Book implements InputValidator{
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="id")
-    private int id;
-
+    @Column(name="isbn")
     private String isbn;
+
     private String title;
 
     @Enumerated(EnumType.STRING)
