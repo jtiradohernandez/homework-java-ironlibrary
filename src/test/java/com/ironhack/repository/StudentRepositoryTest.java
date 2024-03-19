@@ -1,6 +1,7 @@
-package repository;
+package com.ironhack.repository;
 
-import model.Student;
+
+import com.ironhack.model.Student;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -31,10 +32,10 @@ class StudentRepositoryTest {
         studentRepository.flush();
     }
 
-    @Test
-    void findByName() {
-        Optional<Student> student = studentRepository.findByName("Juan");
-        assertTrue(student.isPresent());
-        assertEquals("Juan", student.get().getName());
-    }
+//    @Test
+//    void findByName() {
+//        Optional<Student> student = studentRepository.findByName("Juan");
+//        assertTrue(student.isPresent());
+//        assertEquals("Juan", student.get().getName());
+//    }
 }

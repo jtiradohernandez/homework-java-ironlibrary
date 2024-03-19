@@ -1,4 +1,4 @@
-package repository;
+package com.ironhack.repository;
 
 public interface AuthorRepository {
 }

@@ -1,5 +1,6 @@
-package model;
+package com.ironhack.model;
 
+import com.ironhack.model.Issue;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

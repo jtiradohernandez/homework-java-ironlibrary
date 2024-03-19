@@ -1,4 +1,4 @@
-package model;
+package com.ironhack.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;

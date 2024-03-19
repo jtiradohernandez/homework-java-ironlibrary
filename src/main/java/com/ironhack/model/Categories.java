@@ -1,4 +1,4 @@
-package model;
+package com.ironhack.model;
 
 public enum Categories {
     HORROR,
