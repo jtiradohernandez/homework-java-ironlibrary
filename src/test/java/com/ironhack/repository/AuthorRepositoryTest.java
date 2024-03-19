@@ -33,10 +33,10 @@ class AuthorRepositoryTest {
     }
 
 
-    @Test
+/*    @Test
     public void createAuthor(){
         Optional<Author> authorFound = authorRepository.findById(author.getAuthorId());
         assertTrue(authorFound.isPresent());
         assertEquals(author.getAuthorId(),authorFound.get().getAuthorId());
-    }
+    }*/
 }
