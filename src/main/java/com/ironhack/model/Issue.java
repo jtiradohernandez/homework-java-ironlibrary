@@ -14,6 +14,12 @@ public class Issue implements InputValidator {
     private int issueId;
     private String issueDate;
     private String returnDate;
+    @OneToOne
+    @JoinColumn(name="issue_student")
+    private Student issueStudent;
+    @OneToOne
+    @JoinColumn(name="issue_book")
+    private Book issueBook;
 
     // Constructor without issueId
     public Issue(String issueDate, String returnDate) {
@@ -28,10 +34,7 @@ public class Issue implements InputValidator {
         return true;
     }
 
-    @OneToOne
-    private Student issueStudent;
-    @OneToOne
-    private Book issueBook;
+
 }
 
 
