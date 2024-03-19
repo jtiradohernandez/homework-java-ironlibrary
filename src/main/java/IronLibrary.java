@@ -2,10 +2,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class IronlibraryApplication {
+public class IronLibrary {
 
 	public static void main(String[] args) {
-		SpringApplication.run(IronlibraryApplication.class, args);
+		SpringApplication.run(IronLibrary.class, args);
 	}
 
 }
