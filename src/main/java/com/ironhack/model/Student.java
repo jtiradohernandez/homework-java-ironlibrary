@@ -2,6 +2,7 @@ package com.ironhack.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,8 +19,8 @@ public class Student implements InputValidator{
     private String usn;
     private String name;
 
-//    @OneToOne(mappedBy="issueStudent")
-//    private Issue issue;
+    //@OneToOne(mappedBy="issueStudent")
+    //private Issue issue;
 
     public Student(String usn, String name) {
         this.usn = usn;
