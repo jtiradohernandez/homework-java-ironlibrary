@@ -1,6 +1,6 @@
-package repository;
+package com.ironhack.repository;
 
-import model.Issue;
+import com.ironhack.model.Issue;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

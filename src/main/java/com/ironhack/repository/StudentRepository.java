@@ -1,6 +1,7 @@
-package repository;
+package com.ironhack.repository;
 
-import model.Student;
+
+import com.ironhack.model.Student;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
