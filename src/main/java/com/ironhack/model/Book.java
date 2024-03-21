@@ -24,11 +24,16 @@ public class Book implements InputValidator{
 
     private int quantity;
 
-    public Book(String isbn, String title, Categories category, int quantity) {
+    @OneToOne
+    @JoinColumn(name = "author_id")
+    private Author authorBook;
+
+    public Book(String isbn, String title, Categories category, int quantity, Author author) {
         this.isbn = isbn;
         this.title = title;
         Category = category;
         this.quantity = quantity;
+        this.authorBook = author;
     }
 
     @Override
@@ -41,11 +46,11 @@ public class Book implements InputValidator{
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Book book = (Book) o;
-        return quantity == book.quantity && Objects.equals(isbn, book.isbn) && Objects.equals(title, book.title) && Category == book.Category;
+        return authorBook.equals(book.authorBook) && quantity == book.quantity && Objects.equals(isbn, book.isbn) && Objects.equals(title, book.title) && Category == book.Category;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(isbn, title, Category, quantity);
+        return Objects.hash(isbn, title, Category, quantity, authorBook);
     }
 }

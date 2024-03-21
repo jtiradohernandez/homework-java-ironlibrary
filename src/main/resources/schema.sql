@@ -4,7 +4,7 @@ use library;
 
 
 create table author(
-    id int AUTO_INCREMENT not null,
+    author_id int AUTO_INCREMENT not null,
     name varchar(255) not null,
     email varchar(100) not null,
     primary key(id)
