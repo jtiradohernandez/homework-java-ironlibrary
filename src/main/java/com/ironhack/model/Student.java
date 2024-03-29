@@ -1,12 +1,11 @@
 package com.ironhack.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -19,12 +18,24 @@ public class Student implements InputValidator{
     private String usn;
     private String name;
 
-    //@OneToOne(mappedBy="issueStudent")
-    //private Issue issue;
+    @OneToMany(mappedBy="issueStudent")
+//    @OneToMany(mappedBy="issueStudent", cascade = CascadeType.ALL)
+    private List<Issue> issues;
 
     public Student(String usn, String name) {
         this.usn = usn;
         this.name = name;
+    }
+    public List<Issue> getIssues(){
+        return this.issues;
+    }
+
+    public void addIssue(Issue issue){
+        if (issues == null) {
+            issues = new ArrayList<>();
+        }
+        issues.add(issue);
+        issue.setStudent(this);
     }
 
     public String getUsn() {

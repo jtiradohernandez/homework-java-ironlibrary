@@ -14,7 +14,7 @@ public class Issue implements InputValidator {
     private int issueId;
     private String issueDate;
     private String returnDate;
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name="issue_student")
     private Student issueStudent;
     @OneToOne
@@ -33,6 +33,24 @@ public class Issue implements InputValidator {
         // Return true if validation passes, false otherwise
         return true;
     }
+
+    //no funcionaban los de lombok
+    public void setBook(Book book) {
+        this.issueBook = book;
+    }
+
+    public void setStudent(Student student) {
+        this.issueStudent = student;
+    }
+
+    public String getReturnDate() {
+        return this.returnDate;
+    }
+
+    public Book getIssueBook() {
+        return this.issueBook;
+    }
+
 
 
 }
