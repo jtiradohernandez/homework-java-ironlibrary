@@ -34,22 +34,7 @@ public class Issue implements InputValidator {
         return true;
     }
 
-    //no funcionaban los de lombok
-    public void setBook(Book book) {
-        this.issueBook = book;
-    }
 
-    public void setStudent(Student student) {
-        this.issueStudent = student;
-    }
-
-    public String getReturnDate() {
-        return this.returnDate;
-    }
-
-    public Book getIssueBook() {
-        return this.issueBook;
-    }
 
 
 

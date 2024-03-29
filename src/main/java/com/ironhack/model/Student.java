@@ -2,16 +2,20 @@ package com.ironhack.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+@Getter
+@Setter
 @Entity
 @Table(name="student")
 @Data
-@NoArgsConstructor
+
 
 public class Student implements InputValidator{
     @Id
@@ -26,34 +30,15 @@ public class Student implements InputValidator{
         this.usn = usn;
         this.name = name;
     }
-    public List<Issue> getIssues(){
-        return this.issues;
-    }
 
     public void addIssue(Issue issue){
         if (issues == null) {
             issues = new ArrayList<>();
         }
         issues.add(issue);
-        issue.setStudent(this);
+        issue.setIssueStudent(this);
     }
 
-    public String getUsn() {
-        return usn;
-    }
-
-    public void setUsn(String usn) {
-        this.usn = usn; //uniqueIdGenerator() de Utils
-
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 
     @Override
     public boolean equals(Object o) {

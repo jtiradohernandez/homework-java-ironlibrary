@@ -33,7 +33,6 @@ class StudentTest {
         Issue issue = new Issue("2022-01-01", "2022-02-01");
         student.addIssue(issue);
         assertTrue(student.getIssues().contains(issue));
-        //dice que no existe el getter! pero lleva lombok
-        //assertEquals(student, issue.getStudent());
+        assertEquals(student, issue.getIssueStudent());
     }
 }
