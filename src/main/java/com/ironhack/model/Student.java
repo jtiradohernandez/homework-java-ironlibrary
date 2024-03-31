@@ -1,48 +1,44 @@
 package com.ironhack.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
+@Getter
+@Setter
 @Entity
 @Table(name="student")
 @Data
-@NoArgsConstructor
+
 
 public class Student implements InputValidator{
     @Id
     private String usn;
     private String name;
 
-    //@OneToOne(mappedBy="issueStudent")
-    //private Issue issue;
+    @OneToMany(mappedBy="issueStudent")
+//    @OneToMany(mappedBy="issueStudent", cascade = CascadeType.ALL)
+    private List<Issue> issues;
 
     public Student(String usn, String name) {
         this.usn = usn;
         this.name = name;
     }
 
-    public String getUsn() {
-        return usn;
+    public void addIssue(Issue issue){
+        if (issues == null) {
+            issues = new ArrayList<>();
+        }
+        issues.add(issue);
+        issue.setIssueStudent(this);
     }
 
-    public void setUsn(String usn) {
-        this.usn = usn; //uniqueIdGenerator() de Utils
-
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 
     @Override
     public boolean equals(Object o) {
