@@ -20,7 +20,7 @@ public class Book implements InputValidator{
     private String title;
 
     @Enumerated(EnumType.STRING)
-    private Categories Category;
+    private Categories category;
 
     private int quantity;
 
@@ -31,7 +31,7 @@ public class Book implements InputValidator{
     public Book(String isbn, String title, Categories category, int quantity, Author author) {
         this.isbn = isbn;
         this.title = title;
-        Category = category;
+        this.category = category;
         this.quantity = quantity;
         this.authorBook = author;
     }
@@ -41,16 +41,19 @@ public class Book implements InputValidator{
         return false;
     }
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Book book = (Book) o;
-        return authorBook.equals(book.authorBook) && quantity == book.quantity && Objects.equals(isbn, book.isbn) && Objects.equals(title, book.title) && Category == book.Category;
+        if (!(o instanceof Book book)) return false;
+        return quantity == book.quantity && Objects.equals(isbn, book.isbn) &&
+                Objects.equals(title, book.title) && category == book.category &&
+                authorBook.getAuthorId() == book.authorBook.getAuthorId() && Objects.equals(authorBook.getName(), book.authorBook.getName()) &&
+                book.authorBook.getEmail().equals(authorBook.getEmail());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(isbn, title, Category, quantity, authorBook);
+        return Objects.hash(isbn, title, category, quantity, authorBook);
     }
 }
