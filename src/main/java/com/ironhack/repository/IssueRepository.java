@@ -11,6 +11,4 @@ import java.util.Optional;
 public interface IssueRepository extends JpaRepository<Issue, Integer> {
     Issue findByIssueId(int issueId);
 
-    @Query("SELECT i FROM Issue i JOIN i.issueBook b WHERE b.isbn=?1")
-    Optional<Issue> findIssueByIsbn(String isbn);
 }
