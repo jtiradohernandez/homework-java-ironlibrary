@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,11 +30,6 @@ public class LibraryService {
 
     @Autowired
     StudentRepository studentRepository;
-
-
-    public void addBook(Book book) {
-
-    }
 
     public Optional<Book> searchBookByTitle(String title) {
         return bookRepository.findBookByTitle(title);
@@ -80,13 +74,9 @@ public class LibraryService {
         }
     }
 
-
     public boolean isBookIssued(String isbn) {
         Optional<Book> book = bookRepository.findByIsbn(isbn);
         return book.get().getQuantity() == 0;
-    }
-
-    private void returnBook(String isbn, String usn) {
     }
 
     private List<Issue> searchBooksByStudentString(String usn) {
