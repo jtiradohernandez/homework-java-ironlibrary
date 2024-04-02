@@ -59,21 +59,16 @@ public class LibraryService {
         Issue issue = new Issue(todayString, returnDateString);
 
         Optional<Student> student = studentRepository.findByUsn(usn);
-        if(student.isEmpty()){
-            throw new IllegalArgumentException("Student doesn't exist");
-        }
+
         //check if book is already issued
         if(!isBookIssued(isbn)) {
             issue.setIssueStudent(student.get());
-
             Optional<Book> book = bookRepository.findByIsbn(isbn);
-            if (book.isPresent()) {
-                issue.setIssueBook(book.get());
-            } else {
-                throw new IllegalArgumentException("Book doesn't exist in library");
-            }
-
+            issue.setIssueBook(book.get());
             issueRepository.save(issue);
+            //restar un ejemplar a libro
+            book.get().setQuantity(book.get().getQuantity()-1);
+            bookRepository.save(book.get());
 
         } else{
             System.out.println("Book is already issued");
@@ -82,8 +77,8 @@ public class LibraryService {
     }
 
     public boolean isBookIssued(String isbn){
-        Optional<Issue> issue = issueRepository.findIssueByIsbn(isbn);
-        return issue.isPresent() && issue.get().getIssueBook().getIsbn().equals(isbn);
+        Optional<Book> book = bookRepository.findByIsbn(isbn);
+        return book.get().getQuantity() == 0;
     }
 
     private void returnBook(String isbn , String usn){}
