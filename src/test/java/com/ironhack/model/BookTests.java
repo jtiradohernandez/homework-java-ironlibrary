@@ -11,20 +11,19 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-@SpringBootTest
 public class BookTests {
-    @AfterEach
-    public void tearDown(){
-        bookRepository.deleteAll();
+
+
+    @Test
+    public void testBookCreation(){
+        Author sample_author = new Author("Jose Martinez","josep@gmail.com");
+        Book book = new Book("123456789","Best Book Ever" ,Categories.ADVENTURE, 2, sample_author);
+        assertEquals(book.getAuthorBook(),sample_author);
+        assertEquals(book.getCategory(),Categories.ADVENTURE);
+        assertEquals(book.getIsbn(),"123456789");
+        assertEquals(book.getTitle(),"Best Book Ever");
+        assertEquals(book.getQuantity(),2);
+
     }
-    @Autowired
-    BookRepository bookRepository;
-//    @Test
-//    public void bookCreationTest(){
-//        Book sample_book = new Book("1234","my awesome book", Categories.ADVENTURE,3);
-//        bookRepository.save(sample_book);
-//        Optional<Book> db_book=bookRepository.findBookByTitle("my awesome book");
-//        assertTrue(db_book.isPresent());
-//        assertEquals(sample_book,db_book.get());
-//    }
+
 }

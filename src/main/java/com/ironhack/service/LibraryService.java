@@ -9,6 +9,7 @@ import com.ironhack.repository.BookRepository;
 import com.ironhack.repository.IssueRepository;
 import com.ironhack.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -16,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class LibraryService {
 
     @Autowired
@@ -31,25 +33,26 @@ public class LibraryService {
     StudentRepository studentRepository;
 
     private void addBook(Book book) {
+    public void addBook(Book book){
 
     }
 
-    private Optional<Book> searchBookByTitle(String title) {
+    public Optional<Book> searchBookByTitle(String title){
         return bookRepository.findBookByTitle(title);
     }
 
-    private List<Book> searchBookByCategory(Categories category) {
+    public List<Book> searchBookByCategory(Categories category){
         return bookRepository.findBookByCategory(category);
     }
 
-    private List<Book> searchBookByAuthor(String author) {
-        return new ArrayList<>();
+    public List<Book> searchBookByAuthor(int author_id){
+        return bookRepository.findBookByAuthorId(author_id);
+    }
+    public List<Book> searchAllBooks(){
+        return bookRepository.findAll();
     }
 
-    private List<Book> searchAllBooks() {
-        return new ArrayList<>();
-    }
-
+    public void issueBook(String isbn , String usn){}
     private void issueBook(String usn, String name, String isbn) {
         LocalDateTime issueDate = LocalDateTime.now();
         LocalDateTime returnDate = issueDate.plusDays(7);
@@ -61,6 +64,7 @@ public class LibraryService {
         Issue issue = new Issue(todayString, returnDateString);
         Optional<Student> student = studentRepository.findByUsn(usn);
 
+    public void returnBook(String isbn , String usn){}
         //check if book is already issued
         if (!isBookIssued(isbn)) {
             issue.setIssueStudent(student.get());
@@ -71,6 +75,8 @@ public class LibraryService {
             book.get().updateQuantity(-1);
             bookRepository.save(book.get());
 
+    public List<Book> searchBooksByStudentString( String usn){
+        return new ArrayList<>();
         } else {
             System.out.println("Book is already issued");
         }

@@ -14,7 +14,7 @@ public class Issue implements InputValidator {
     private int issueId;
     private String issueDate;
     private String returnDate;
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name="issue_student")
     private Student issueStudent;
     @OneToOne
@@ -33,6 +33,9 @@ public class Issue implements InputValidator {
         // Return true if validation passes, false otherwise
         return true;
     }
+
+
+
 
 
 }
