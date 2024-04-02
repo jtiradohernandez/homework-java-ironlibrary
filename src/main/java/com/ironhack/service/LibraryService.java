@@ -32,27 +32,30 @@ public class LibraryService {
     @Autowired
     StudentRepository studentRepository;
 
-    private void addBook(Book book) {
-    public void addBook(Book book){
+
+    public void addBook(Book book) {
 
     }
 
-    public Optional<Book> searchBookByTitle(String title){
+    public Optional<Book> searchBookByTitle(String title) {
         return bookRepository.findBookByTitle(title);
     }
 
-    public List<Book> searchBookByCategory(Categories category){
+    public List<Book> searchBookByCategory(Categories category) {
         return bookRepository.findBookByCategory(category);
     }
 
-    public List<Book> searchBookByAuthor(int author_id){
+    public List<Book> searchBookByAuthor(int author_id) {
         return bookRepository.findBookByAuthorId(author_id);
     }
-    public List<Book> searchAllBooks(){
+
+    public List<Book> searchAllBooks() {
         return bookRepository.findAll();
     }
 
-    public void issueBook(String isbn , String usn){}
+    public void issueBook(String isbn, String usn) {
+    }
+
     private void issueBook(String usn, String name, String isbn) {
         LocalDateTime issueDate = LocalDateTime.now();
         LocalDateTime returnDate = issueDate.plusDays(7);
@@ -63,8 +66,6 @@ public class LibraryService {
 
         Issue issue = new Issue(todayString, returnDateString);
         Optional<Student> student = studentRepository.findByUsn(usn);
-
-    public void returnBook(String isbn , String usn){}
         //check if book is already issued
         if (!isBookIssued(isbn)) {
             issue.setIssueStudent(student.get());
@@ -74,14 +75,11 @@ public class LibraryService {
             //restar un ejemplar a libro
             book.get().updateQuantity(-1);
             bookRepository.save(book.get());
-
-    public List<Book> searchBooksByStudentString( String usn){
-        return new ArrayList<>();
         } else {
             System.out.println("Book is already issued");
         }
-
     }
+
 
     public boolean isBookIssued(String isbn) {
         Optional<Book> book = bookRepository.findByIsbn(isbn);
