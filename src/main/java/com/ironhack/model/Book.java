@@ -53,4 +53,8 @@ public class Book implements InputValidator{
     public int hashCode() {
         return Objects.hash(isbn, title, Category, quantity, authorBook);
     }
+
+    public void updateQuantity(int newQuantity){
+        this.quantity+=newQuantity;
+    }
 }

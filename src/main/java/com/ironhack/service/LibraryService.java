@@ -29,61 +29,63 @@ public class LibraryService {
 
     @Autowired
     StudentRepository studentRepository;
-    private void addBook(Book book){
+
+    private void addBook(Book book) {
 
     }
 
-    private Optional<Book> searchBookByTitle(String title){
+    private Optional<Book> searchBookByTitle(String title) {
         return bookRepository.findBookByTitle(title);
     }
 
-    private List<Book> searchBookByCategory(Categories category){
+    private List<Book> searchBookByCategory(Categories category) {
         return bookRepository.findBookByCategory(category);
     }
 
-    private List<Book> searchBookByAuthor(String author){
-        return new ArrayList<>();
-    }
-    private List<Book> searchAllBooks(){
+    private List<Book> searchBookByAuthor(String author) {
         return new ArrayList<>();
     }
 
-    private void issueBook(String usn, String name, String isbn){
-        LocalDateTime today = LocalDateTime.now();
+    private List<Book> searchAllBooks() {
+        return new ArrayList<>();
+    }
+
+    private void issueBook(String usn, String name, String isbn) {
+        LocalDateTime issueDate = LocalDateTime.now();
+        LocalDateTime returnDate = issueDate.plusDays(7);
+        //mover a Utils:
         DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-        String todayString = FORMATTER.format( today );
-
-        LocalDateTime returnDate = today.plusDays(7);
-        String returnDateString = FORMATTER.format( returnDate );
+        String todayString = FORMATTER.format(issueDate);
+        String returnDateString = FORMATTER.format(returnDate);
 
         Issue issue = new Issue(todayString, returnDateString);
-
         Optional<Student> student = studentRepository.findByUsn(usn);
 
         //check if book is already issued
-        if(!isBookIssued(isbn)) {
+        if (!isBookIssued(isbn)) {
             issue.setIssueStudent(student.get());
             Optional<Book> book = bookRepository.findByIsbn(isbn);
             issue.setIssueBook(book.get());
             issueRepository.save(issue);
             //restar un ejemplar a libro
-            book.get().setQuantity(book.get().getQuantity()-1);
+            book.get().updateQuantity(-1);
             bookRepository.save(book.get());
 
-        } else{
+        } else {
             System.out.println("Book is already issued");
         }
 
     }
 
-    public boolean isBookIssued(String isbn){
+    public boolean isBookIssued(String isbn) {
         Optional<Book> book = bookRepository.findByIsbn(isbn);
         return book.get().getQuantity() == 0;
     }
 
-    private void returnBook(String isbn , String usn){}
+    private void returnBook(String isbn, String usn) {
+    }
 
-    private List<Issue> searchBooksByStudentString(String usn){
+    private List<Issue> searchBooksByStudentString(String usn) {
         return studentRepository.searchBooksByStudentString(usn);
     }
 }
