@@ -7,11 +7,13 @@ import com.ironhack.repository.BookRepository;
 import com.ironhack.repository.IssueRepository;
 import com.ironhack.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class LibraryService {
 
     @Autowired
@@ -25,30 +27,30 @@ public class LibraryService {
 
     @Autowired
     StudentRepository studentRepository;
-    private void addBook(Book book){
+    public void addBook(Book book){
 
     }
 
-    private Optional<Book> searchBookByTitle(String title){
+    public Optional<Book> searchBookByTitle(String title){
         return bookRepository.findBookByTitle(title);
     }
 
-    private List<Book> searchBookByCategory(Categories category){
+    public List<Book> searchBookByCategory(Categories category){
         return bookRepository.findBookByCategory(category);
     }
 
-    private List<Book> searchBookByAuthor(String author){
-        return new ArrayList<>();
+    public List<Book> searchBookByAuthor(int author_id){
+        return bookRepository.findBookByAuthorId(author_id);
     }
-    private List<Book> searchAllBooks(){
-        return new ArrayList<>();
+    public List<Book> searchAllBooks(){
+        return bookRepository.findAll();
     }
 
-    private void issueBook(String isbn , String usn){}
+    public void issueBook(String isbn , String usn){}
 
-    private void returnBook(String isbn , String usn){}
+    public void returnBook(String isbn , String usn){}
 
-    private List<Book> searchBooksByStudentString( String usn){
+    public List<Book> searchBooksByStudentString( String usn){
         return new ArrayList<>();
     }
 }
