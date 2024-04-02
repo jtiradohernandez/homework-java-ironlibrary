@@ -37,9 +37,13 @@ public class LibraryMenu {
             System.out.println("8. Search Books By Student");
             System.out.println("0. Exit");
             System.out.print("Enter your choice: ");
-            choice = scanner.nextInt();
-            scanner.nextLine(); // Consume newline
-
+            try{
+                choice = scanner.nextInt();
+                scanner.nextLine(); // Consume newline
+            }catch (InputMismatchException ime){
+                choice = 9;
+                scanner.nextLine();
+            }
             switch (choice) {
                 case 1:
                     // Add Book
