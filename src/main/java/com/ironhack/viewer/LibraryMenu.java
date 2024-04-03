@@ -2,6 +2,8 @@ package com.ironhack.viewer;
 
 import com.ironhack.model.Book;
 import com.ironhack.model.Categories;
+import com.ironhack.model.Issue;
+import com.ironhack.model.Student;
 import com.ironhack.service.LibraryService;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -101,12 +103,58 @@ public class LibraryMenu {
                     break;
                 case 6:
                     // Issue Book
+                    System.out.print("Enter usn:");
+                    String usn = scanner.nextLine();
+                    System.out.print("Enter name:");
+                    String name = scanner.nextLine();
+                    System.out.print("Enter book ISBN:");
+                    String isbn = scanner.nextLine();
+                    try{
+                        //check if student and book exist. Comprobar nombre?????
+                        Optional<Student> studentOptional = libraryService.findStudentByUsn(usn);
+                        Optional<Book> bookOptional = libraryService.findBookByIsbn(isbn);
+                        if (studentOptional.isPresent() && bookOptional.isPresent()) {
+                            libraryService.issueBook(usn, name, isbn);
+                            Optional<Issue> issue = libraryService.findIssueByIsbn(isbn);
+                            System.out.println("");
+                            System.out.println("Book issued. Return date : " + issue.get().getReturnDate());
+                        } else {
+                            System.out.println("Student or book does not exist.");
+                        }
+                    } catch (IllegalArgumentException iae){
+                        System.out.println("An exception occurred: " + iae.getMessage());
+                }
                     break;
                 case 7:
                     // Return Book
                     break;
                 case 8:
                     // Search Books By Student
+                    System.out.println("Enter usn:");
+                    String usnSearch = scanner.nextLine();
+                    try{
+                        Optional<Student> studentOptional = libraryService.findStudentByUsn(usnSearch);
+                        if (studentOptional.isPresent()){
+                            List<Issue> issueList = libraryService.searchBooksByStudentString(usnSearch);
+                            if (issueList.isEmpty()) {
+                                System.out.println("No books found for the specified student.");
+                                break;
+                            }
+                            System.out.println("Book Title          Student Name    Return date");
+                            for (Issue issue : issueList) {
+                                String bookTitle = issue.getIssueBook().getTitle();
+                                String studentName = issue.getIssueStudent().getName();
+                                String returnDate = issue.getReturnDate();
+                                System.out.printf("%-20s %-15s %s%n", bookTitle, studentName, returnDate);
+                            }
+
+                        } else{
+                            System.out.println("Student does not exist");
+                        }
+
+                    } catch(IllegalArgumentException iae) {
+                        System.out.println("An exception occurred: " + iae.getMessage());
+                    }
                     break;
                 case 0:
                     System.out.println("Exiting...");
