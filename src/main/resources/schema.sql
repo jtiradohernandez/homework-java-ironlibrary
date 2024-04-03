@@ -7,25 +7,25 @@ create table author(
     author_id int AUTO_INCREMENT not null,
     name varchar(255) not null,
     email varchar(100) not null,
-    primary key(id)
+    primary key(author_id)
 );
 
 create table book(
-isbn varchar(17) not null,
-title varchar(255) not null,
-category enum('HORROR',
-    'SCIENCE',
-    'ROMANCE',
-    'FICTION',
-    'FANTASY',
-    'ADVENTURE',
-    'BIOGRAPHY',
-    'MISTERY',
-    'OTHERS'),
-quantity int not null,
-author_id int not null,
-foreign key(author_id) references author(id),
-primary key(isbn)
+    isbn varchar(17) not null,
+    title varchar(255) not null,
+    category enum('HORROR',
+        'SCIENCE',
+        'ROMANCE',
+        'FICTION',
+        'FANTASY',
+        'ADVENTURE',
+        'BIOGRAPHY',
+        'MISTERY',
+        'OTHERS'),
+    quantity int not null,
+    author_id int not null,
+    foreign key(author_id) references author(author_id),
+    primary key(isbn)
 );
 
 

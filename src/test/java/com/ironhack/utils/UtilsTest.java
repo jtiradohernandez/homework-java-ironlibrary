@@ -15,7 +15,6 @@ class UtilsTest {
         assertFalse(Utils.stringValidator(""));
         assertFalse(Utils.stringValidator(null));
     }
-
     @Test
     void testEmailValidator() {
         assertTrue(Utils.emailValidator("example@example.com"));
@@ -28,6 +27,7 @@ class UtilsTest {
     void testIsbnValidator() {
         assertTrue(Utils.isbnValidator("978-3-16-148410-0"));
         assertTrue(Utils.isbnValidator("0-306-40615-2"));
+
         assertFalse(Utils.isbnValidator("1234567890123"));
         assertFalse(Utils.isbnValidator(null));
     }

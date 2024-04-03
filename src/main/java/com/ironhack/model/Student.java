@@ -13,25 +13,25 @@ import java.util.Objects;
 @Getter
 @Setter
 @Entity
-@Table(name="student")
+@Table(name = "student")
 @Data
-
-
-public class Student implements InputValidator{
+public class Student implements InputValidator {
     @Id
     private String usn;
     private String name;
 
-    @OneToMany(mappedBy="issueStudent")
-//    @OneToMany(mappedBy="issueStudent", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "issueStudent", cascade = CascadeType.ALL)
     private List<Issue> issues;
+
+    public Student() {
+    }
 
     public Student(String usn, String name) {
         this.usn = usn;
         this.name = name;
     }
 
-    public void addIssue(Issue issue){
+    public void addIssue(Issue issue) {
         if (issues == null) {
             issues = new ArrayList<>();
         }

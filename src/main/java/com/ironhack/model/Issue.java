@@ -21,7 +21,6 @@ public class Issue implements InputValidator {
     @JoinColumn(name="issue_book")
     private Book issueBook;
 
-    // Constructor without issueId
     public Issue(String issueDate, String returnDate) {
         this.issueDate = issueDate;
         this.returnDate = returnDate;
@@ -33,11 +32,6 @@ public class Issue implements InputValidator {
         // Return true if validation passes, false otherwise
         return true;
     }
-
-
-
-
-
 }
 
 
