@@ -80,6 +80,6 @@ public class LibraryService {
     }
 
     private List<Issue> searchBooksByStudentString(String usn) {
-        return studentRepository.searchBooksByStudentString(usn);
+        return studentRepository.searchBooksByStudent(usn);
     }
 }

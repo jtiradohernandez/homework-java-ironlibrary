@@ -16,5 +16,5 @@ public interface StudentRepository extends JpaRepository<Student, String> {
     Optional<Student> findByUsn(String usn);
 
     @Query("SELECT i FROM Issue i JOIN i.issueStudent s WHERE s.usn = ?1")
-    List<Issue> searchBooksByStudentString(String usn);
+    List<Issue> searchBooksByStudent(String usn);
 }
