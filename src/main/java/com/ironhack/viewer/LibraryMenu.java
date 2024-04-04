@@ -1,20 +1,18 @@
 package com.ironhack.viewer;
 
-import com.ironhack.model.Book;
-import com.ironhack.model.Categories;
-import com.ironhack.model.Issue;
-import com.ironhack.model.Student;
+import com.ironhack.model.*;
+import com.ironhack.repository.AuthorRepository;
 import com.ironhack.service.LibraryService;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.InputMismatchException;
-import java.util.List;
-import java.util.Optional;
-import java.util.Scanner;
+import java.util.*;
 
 public class LibraryMenu {
     @Autowired
     private LibraryService libraryService;
+
+    @Autowired
+    private AuthorRepository authorRepository;
 
     private Optional<Book> one_book=null;
     private List<Book> books;
@@ -49,6 +47,39 @@ public class LibraryMenu {
             switch (choice) {
                 case 1:
                     // Add Book
+                    System.out.print("Enter isbn: ");
+                    String isbnBook = scanner.nextLine();
+                    System.out.print("Enter title: ");
+                    String titleBook = scanner.nextLine();
+                    System.out.print("Enter category (Available categories: HORROR, SCIENCE, ROMANCE, FICTION, FANTASY, ADVENTURE, BIOGRAPHY, MISTERY, OTHERS");
+                    String categoryInput = scanner.nextLine().toUpperCase();
+                    Categories categoryBook;
+                    try {
+                        categoryBook = Categories.valueOf(categoryInput);
+                    } catch (IllegalArgumentException e) {
+                        System.out.println("Invalid category. Please enter a valid category.");
+                        break;
+                    }
+                    System.out.print("Enter Author name: ");
+                    String authorName = scanner.nextLine();
+                    System.out.print("Enter Author mail: ");
+                    String authorMail = scanner.nextLine();
+                    System.out.print("Enter number of books: ");
+                    int quantity = scanner.nextInt();
+                    Author author;
+                    Optional<Author> optionalAuthor = authorRepository.findByName(authorName);
+                    if (optionalAuthor.isPresent()) {
+                        author = optionalAuthor.get();
+                    } else {
+                        author = new Author(authorName, authorMail);
+                        authorRepository.save(author);
+                    }
+                    Book newBook = new Book(isbnBook, titleBook, categoryBook, quantity, new Author(authorName, authorMail));
+                    try{
+                        libraryService.addNewBook(newBook);
+                    } catch (IllegalArgumentException iae){
+                        System.out.println("error");
+                    }
                     break;
                 case 2:
                     System.out.print("Enter title to search: ");
@@ -93,12 +124,31 @@ public class LibraryMenu {
                     }
 
                     break;
+//                case 5:
+//                    // Search All Books
+//                    books = libraryService.searchAllBooks();
+//                    for(Book book: books){
+//                        System.out.println(book.getIsbn());
+//                        System.out.println(book.getTitle());
+//                    }
+//                    break;
                 case 5:
                     // Search All Books
-                    books = libraryService.searchAllBooks();
-                    for(Book book: books){
-                        System.out.println(book.getIsbn());
-                        System.out.println(book.getTitle());
+                    books = libraryService.findAllBooksWithAuthors();
+                    if (books.isEmpty()) {
+                        System.out.println("No books found.");
+                        return;
+                    }
+
+                    System.out.println("Book ISBN           Book Title      Category      No of Books     Author name           Author mail ");
+                    for (Book book : books) {
+                        String bookIsbn = book.getIsbn();
+                        String bookTitle = book.getTitle();
+                        Categories categoryList = book.getCategory();
+                        int numOfBooks = book.getQuantity();
+                        String authorNameList = book.getAuthorBook().getName();
+                        String authorEmail = book.getAuthorBook().getEmail();
+                        System.out.printf("%-20s %-15s %-12s %-15s %-20s %s%n", bookIsbn, bookTitle, categoryList, numOfBooks, authorNameList, authorEmail);
                     }
                     break;
                 case 6:

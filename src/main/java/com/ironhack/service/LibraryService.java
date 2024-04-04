@@ -31,6 +31,16 @@ public class LibraryService {
     @Autowired
     StudentRepository studentRepository;
 
+    public void addNewBook(Book book) {
+        Optional<Book> optionalBook = bookRepository.findByIsbn(book.getIsbn());
+        if (optionalBook.isPresent()) {
+            book.setQuantity(book.getQuantity() + 1);
+            bookRepository.save(book);
+        } else {
+            bookRepository.save(book);
+        }
+    }
+
     public Optional<Book> searchBookByTitle(String title) {
         return bookRepository.findBookByTitle(title);
     }
@@ -77,9 +87,19 @@ public class LibraryService {
         return studentRepository.searchBooksByStudent(usn);
     }
 
-    public Optional<Issue> findIssueByIsbn(String isbn){ return issueRepository.findByIsbn(isbn);}
+    public Optional<Issue> findIssueByIsbn(String isbn) {
+        return issueRepository.findByIsbn(isbn);
+    }
 
-    public Optional<Book> findBookByIsbn(String isbn){return bookRepository.findByIsbn(isbn);}
+    public Optional<Book> findBookByIsbn(String isbn) {
+        return bookRepository.findByIsbn(isbn);
+    }
 
-    public Optional<Student> findStudentByUsn(String usn){return studentRepository.findByUsn(usn);}
+    public Optional<Student> findStudentByUsn(String usn) {
+        return studentRepository.findByUsn(usn);
+    }
+
+    public List<Book> findAllBooksWithAuthors() {
+        return bookRepository.findAllBooksWithAuthor();
+    }
 }
