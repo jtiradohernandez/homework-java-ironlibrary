@@ -67,7 +67,7 @@ public class Utils {
         return currentQuantity + change;
     }
 
-    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    public static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
 
     /**
      * Validates if the provided date string follows the "dd/MM/yyyy" format.

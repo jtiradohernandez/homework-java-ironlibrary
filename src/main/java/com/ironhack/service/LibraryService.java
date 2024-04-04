@@ -10,9 +10,9 @@ import com.ironhack.repository.IssueRepository;
 import com.ironhack.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import com.ironhack.utils.Utils;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
@@ -47,18 +47,12 @@ public class LibraryService {
         return bookRepository.findAll();
     }
 
-    public void issueBook(String isbn, String usn) {
-    }
-
-    private void issueBook(String usn, String name, String isbn) {
+    public void issueBook(String usn, String name, String isbn) {
         LocalDateTime issueDate = LocalDateTime.now();
         LocalDateTime returnDate = issueDate.plusDays(7);
-        //mover a Utils:
-        DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-        String todayString = FORMATTER.format(issueDate);
-        String returnDateString = FORMATTER.format(returnDate);
-
-        Issue issue = new Issue(todayString, returnDateString);
+        String issueDateString = Utils.formatter.format(issueDate);
+        String returnDateString = Utils.formatter.format(returnDate);
+        Issue issue = new Issue(issueDateString, returnDateString);
         Optional<Student> student = studentRepository.findByUsn(usn);
         //check if book is already issued
         if (!isBookIssued(isbn)) {
@@ -79,7 +73,13 @@ public class LibraryService {
         return book.get().getQuantity() == 0;
     }
 
-    private List<Issue> searchBooksByStudentString(String usn) {
+    public List<Issue> searchBooksByStudentString(String usn) {
         return studentRepository.searchBooksByStudent(usn);
     }
+
+    public Optional<Issue> findIssueByIsbn(String isbn){ return issueRepository.findByIsbn(isbn);}
+
+    public Optional<Book> findBookByIsbn(String isbn){return bookRepository.findByIsbn(isbn);}
+
+    public Optional<Student> findStudentByUsn(String usn){return studentRepository.findByUsn(usn);}
 }
