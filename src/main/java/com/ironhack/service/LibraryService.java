@@ -70,9 +70,10 @@ public class LibraryService {
             //restar un ejemplar a libro
             book.get().updateQuantity(-1);
             bookRepository.save(book.get());
-        } else {
-            System.out.println("Book is already issued");
         }
+//        else {
+//            System.out.println("Book is already issued");
+//        }
     }
 
     public boolean isBookIssued(String isbn) {

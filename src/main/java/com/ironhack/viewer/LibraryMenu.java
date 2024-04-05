@@ -167,10 +167,15 @@ public class LibraryMenu {
                         Optional<Student> studentOptional = libraryService.findStudentByUsn(usn);
                         Optional<Book> bookOptional = libraryService.findBookByIsbn(isbn);
                         if (studentOptional.isPresent() && bookOptional.isPresent()) {
-                            libraryService.issueBook(usn, name, isbn);
-                            Optional<Issue> issue = libraryService.findIssueByIsbn(isbn);
-                            System.out.println("");
-                            System.out.println("Book issued. Return date : " + issue.get().getReturnDate());
+                            Book book = bookOptional.get();
+                            if (book.getQuantity() > 0) {
+                                libraryService.issueBook(usn, name, isbn);
+                                Optional<Issue> issue = libraryService.findIssueByIsbn(isbn);
+                                System.out.println("");
+                                System.out.println("Book issued. Return date : " + issue.get().getReturnDate());
+                            } else {
+                                System.out.println("There aren't any copies left.");
+                            }
                         } else {
                             System.out.println("Student or book does not exist.");
                         }
