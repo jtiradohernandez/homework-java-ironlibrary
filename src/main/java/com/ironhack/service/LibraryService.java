@@ -54,7 +54,7 @@ public class LibraryService {
         return bookRepository.findAll();
     }
 
-    public void issueBook(String usn, String name, String isbn) {
+    public String issueBook(String usn, String name, String isbn) {
         LocalDateTime issueDate = LocalDateTime.now();
         LocalDateTime returnDate = issueDate.plusDays(7);
         String issueDateString = Utils.formatter.format(issueDate);
@@ -70,10 +70,10 @@ public class LibraryService {
             //restar un ejemplar a libro
             book.get().updateQuantity(-1);
             bookRepository.save(book.get());
+            return returnDateString;
+        } else {
+            return null;
         }
-//        else {
-//            System.out.println("Book is already issued");
-//        }
     }
 
     public boolean isBookIssued(String isbn) {
@@ -85,8 +85,12 @@ public class LibraryService {
         return studentRepository.searchBooksByStudent(usn);
     }
 
-    public Optional<Issue> findIssueByIsbn(String isbn) {
+    public List<Issue> findIssueByIsbn(String isbn) {
         return issueRepository.findByIsbn(isbn);
+    }
+
+    public List<Issue> findIssueByUsn(String usn) {
+        return issueRepository.findByUsn(usn);
     }
 
     public Optional<Book> findBookByIsbn(String isbn) {
@@ -100,6 +104,9 @@ public class LibraryService {
     public List<Book> findAllBooksWithAuthors() {
         return bookRepository.findAllBooksWithAuthor();
     }
+
     //añadido hoy
-    public Optional<Author> findAuthorByName(String name){ return authorRepository.findByName(name);}
+    public Optional<Author> findAuthorByName(String name) {
+        return authorRepository.findByName(name);
+    }
 }

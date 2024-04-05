@@ -16,7 +16,7 @@ public class LibraryMenu {
     @Autowired
     private AuthorRepository authorRepository;
 
-    private Optional<Book> one_book=null;
+    private Optional<Book> one_book = null;
     private List<Book> books;
 
     public LibraryMenu(LibraryService libraryService) {
@@ -39,10 +39,10 @@ public class LibraryMenu {
             System.out.println("8. Search Books By Student");
             System.out.println("0. Exit");
             System.out.print("Enter your choice: ");
-            try{
+            try {
                 choice = scanner.nextInt();
                 scanner.nextLine(); // Consume newline
-            }catch (InputMismatchException ime){
+            } catch (InputMismatchException ime) {
                 choice = 9;
                 scanner.nextLine();
             }
@@ -77,9 +77,9 @@ public class LibraryMenu {
                         authorRepository.save(author);
                     }
                     Book newBook = new Book(isbnBook, titleBook, categoryBook, quantity, author);
-                    try{
+                    try {
                         libraryService.addNewBook(newBook);
-                    } catch (IllegalArgumentException iae){
+                    } catch (IllegalArgumentException iae) {
                         System.out.println("error");
                     }
                     System.out.println("Book was successfully added to library");
@@ -87,8 +87,8 @@ public class LibraryMenu {
                 case 2:
                     System.out.print("Enter title to search: ");
                     String title = scanner.nextLine();
-                    one_book=libraryService.searchBookByTitle(title);
-                    if(one_book.isPresent()) {
+                    one_book = libraryService.searchBookByTitle(title);
+                    if (one_book.isPresent()) {
                         System.out.println(one_book.get().getIsbn());
                         System.out.println(one_book.get().getTitle());
                     }
@@ -96,9 +96,9 @@ public class LibraryMenu {
                 case 3:
                     System.out.print("Enter a Category to search: ");
                     String category = scanner.nextLine();
-                    try{
+                    try {
                         books = libraryService.searchBookByCategory(Categories.valueOf(category));
-                        for(Book book: books){
+                        for (Book book : books) {
                             System.out.println(book.getIsbn());
                             System.out.println(book.getTitle());
                         }
@@ -106,7 +106,7 @@ public class LibraryMenu {
 //                    catch (InputMismatchException imm){
 //                        System.out.print("Wrong Category ");
 //                    }
-                    catch (IllegalArgumentException iae){
+                    catch (IllegalArgumentException iae) {
                         System.out.println("Wrong Category");
                     }
 
@@ -114,15 +114,15 @@ public class LibraryMenu {
                 case 4:
                     System.out.print("Enter an Author ID:");
                     String author_id = scanner.nextLine();
-                    try{
+                    try {
                         //TODO change to isbn validation
                         int authorid = Integer.parseInt(author_id);
                         books = libraryService.searchBookByAuthor(authorid);
-                        for(Book book: books){
+                        for (Book book : books) {
                             System.out.println(book.getIsbn());
                             System.out.println(book.getTitle());
                         }
-                    }catch (IllegalArgumentException iae){
+                    } catch (IllegalArgumentException iae) {
                         System.out.println("Author ID should be numeric");
                     }
 
@@ -140,7 +140,7 @@ public class LibraryMenu {
                     books = libraryService.findAllBooksWithAuthors();
                     if (books.isEmpty()) {
                         System.out.println("No books found.");
-                        return;
+                        break;
                     }
 
                     System.out.println("Book ISBN           Book Title      Category      No of Books     Author name           Author mail ");
@@ -162,26 +162,25 @@ public class LibraryMenu {
                     String name = scanner.nextLine();
                     System.out.print("Enter book ISBN:");
                     String isbn = scanner.nextLine();
-                    try{
+                    try {
                         //check if student and book exist. Comprobar nombre?????
                         Optional<Student> studentOptional = libraryService.findStudentByUsn(usn);
                         Optional<Book> bookOptional = libraryService.findBookByIsbn(isbn);
                         if (studentOptional.isPresent() && bookOptional.isPresent()) {
                             Book book = bookOptional.get();
                             if (book.getQuantity() > 0) {
-                                libraryService.issueBook(usn, name, isbn);
-                                Optional<Issue> issue = libraryService.findIssueByIsbn(isbn);
+                                String returnDate = libraryService.issueBook(usn, name, isbn);
                                 System.out.println("");
-                                System.out.println("Book issued. Return date : " + issue.get().getReturnDate());
+                                System.out.println("Book issued. Return date : " + returnDate);
                             } else {
                                 System.out.println("There aren't any copies left.");
                             }
                         } else {
                             System.out.println("Student or book does not exist.");
                         }
-                    } catch (IllegalArgumentException iae){
+                    } catch (IllegalArgumentException iae) {
                         System.out.println("An exception occurred: " + iae.getMessage());
-                }
+                    }
                     break;
                 case 7:
                     // Return Book
@@ -190,9 +189,9 @@ public class LibraryMenu {
                     // Search Books By Student
                     System.out.println("Enter usn:");
                     String usnSearch = scanner.nextLine();
-                    try{
+                    try {
                         Optional<Student> studentOptional = libraryService.findStudentByUsn(usnSearch);
-                        if (studentOptional.isPresent()){
+                        if (studentOptional.isPresent()) {
                             List<Issue> issueList = libraryService.searchBooksByStudentString(usnSearch);
                             if (issueList.isEmpty()) {
                                 System.out.println("No books found for the specified student.");
@@ -206,11 +205,11 @@ public class LibraryMenu {
                                 System.out.printf("%-20s %-15s %s%n", bookTitle, studentName, returnDate);
                             }
 
-                        } else{
+                        } else {
                             System.out.println("Student does not exist");
                         }
 
-                    } catch(IllegalArgumentException iae) {
+                    } catch (IllegalArgumentException iae) {
                         System.out.println("An exception occurred: " + iae.getMessage());
                     }
                     break;

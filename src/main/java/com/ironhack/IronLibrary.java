@@ -11,23 +11,15 @@ import org.springframework.context.ConfigurableApplicationContext;
 @SpringBootApplication
 public class IronLibrary {
 
-
-	@Autowired
-	private LibraryMenu libraryMenu;
-
-	public static void main(String[] args) {
-		ConfigurableApplicationContext context =SpringApplication.run(IronLibrary.class, args);
-		LibraryService libraryService = context.getBean(LibraryService.class);
-		LibraryMenu libraryMenu = new LibraryMenu(libraryService);
-		libraryMenu.displayMenu();
-		context.close();
+    public static void main(String[] args) {
+        ConfigurableApplicationContext context = SpringApplication.run(IronLibrary.class, args);
+//		LibraryService libraryService = context.getBean(LibraryService.class);
+//		LibraryMenu libraryMenu = new LibraryMenu(libraryService);
+        LibraryMenu libraryMenu = context.getBean(LibraryMenu.class);
+        libraryMenu.displayMenu();
+        context.close();
 //		SpringApplication.run(IronLibrary.class, args);
-	}
+    }
 
-
-	@PostConstruct
-	public void runLibraryMenu() {
-		libraryMenu.displayMenu();
-	}
 
 }
