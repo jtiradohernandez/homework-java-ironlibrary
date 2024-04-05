@@ -1,9 +1,6 @@
 package com.ironhack.service;
 
-import com.ironhack.model.Book;
-import com.ironhack.model.Categories;
-import com.ironhack.model.Issue;
-import com.ironhack.model.Student;
+import com.ironhack.model.*;
 import com.ironhack.repository.AuthorRepository;
 import com.ironhack.repository.BookRepository;
 import com.ironhack.repository.IssueRepository;
@@ -102,4 +99,6 @@ public class LibraryService {
     public List<Book> findAllBooksWithAuthors() {
         return bookRepository.findAllBooksWithAuthor();
     }
+    //añadido hoy
+    public Optional<Author> findAuthorByName(String name){ return authorRepository.findByName(name);}
 }

@@ -4,9 +4,11 @@ import com.ironhack.model.*;
 import com.ironhack.repository.AuthorRepository;
 import com.ironhack.service.LibraryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.*;
 
+@Component
 public class LibraryMenu {
     @Autowired
     private LibraryService libraryService;
@@ -67,19 +69,20 @@ public class LibraryMenu {
                     System.out.print("Enter number of books: ");
                     int quantity = scanner.nextInt();
                     Author author;
-                    Optional<Author> optionalAuthor = authorRepository.findByName(authorName);
+                    Optional<Author> optionalAuthor = libraryService.findAuthorByName(authorName);
                     if (optionalAuthor.isPresent()) {
                         author = optionalAuthor.get();
                     } else {
                         author = new Author(authorName, authorMail);
                         authorRepository.save(author);
                     }
-                    Book newBook = new Book(isbnBook, titleBook, categoryBook, quantity, new Author(authorName, authorMail));
+                    Book newBook = new Book(isbnBook, titleBook, categoryBook, quantity, author);
                     try{
                         libraryService.addNewBook(newBook);
                     } catch (IllegalArgumentException iae){
                         System.out.println("error");
                     }
+                    System.out.println("Book was successfully added to library");
                     break;
                 case 2:
                     System.out.print("Enter title to search: ");
