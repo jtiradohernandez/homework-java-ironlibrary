@@ -21,7 +21,7 @@ public class IronLibrary {
 		LibraryMenu libraryMenu = new LibraryMenu(libraryService);
 		libraryMenu.displayMenu();
 		context.close();
-		SpringApplication.run(IronLibrary.class, args);
+//		SpringApplication.run(IronLibrary.class, args);
 	}
 
 
