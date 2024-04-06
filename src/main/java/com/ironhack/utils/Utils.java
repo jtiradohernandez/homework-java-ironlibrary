@@ -117,7 +117,7 @@ public class Utils {
         if (usn == null) return false;
 
         // USN Regex that matches exactly 13 numeric characters
-        String usnRegex = "^[0-9]{13}$";
+        String usnRegex = "^[0-9]{11}$";
 
         Pattern usnPattern = Pattern.compile(usnRegex);
         Matcher matcher = usnPattern.matcher(usn);
