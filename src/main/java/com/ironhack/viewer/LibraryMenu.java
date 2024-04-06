@@ -67,8 +67,8 @@ public class LibraryMenu {
                     System.out.println("Book was successfully added to library");
                     break;
                 case 2:
-                    System.out.print("Enter title to search: ");
-                    String title = scanner.nextLine();
+//                    System.out.print("Enter title to search: ");
+                    String title = libraryService.getTitle(scanner);
                     Optional<Book> requestedBook = libraryService.searchBookByTitle(title);
                     if (requestedBook.isPresent()) {
                         System.out.println(requestedBook.get());
@@ -77,8 +77,8 @@ public class LibraryMenu {
                     }
                     break;
                 case 3:
-                    System.out.print("Enter a Category to search: ");
-                    String category = scanner.nextLine();
+//                    System.out.print("Enter a Category to search: ");
+                    String category = libraryService.getCategory(scanner).name();
                     try {
                         List<Book> books = libraryService.searchBookByCategory(Categories.valueOf(category));
                         for (Book book : books) {
@@ -115,7 +115,6 @@ public class LibraryMenu {
                     String usn = libraryService.getUsn(scanner);
                     System.out.print("Enter name:");
                     String name = scanner.nextLine();
-                    System.out.print("Enter book ISBN:");
                     String isbn = libraryService.getIsbn(scanner);
                     try {
                         //check if student and book exist. Comprobar nombre?????

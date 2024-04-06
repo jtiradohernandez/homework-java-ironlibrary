@@ -141,54 +141,55 @@ public class LibraryService {
         }
     }
 
-    public String getIsbn(Scanner scanner){
+    public String getIsbn(Scanner scanner) {
         String isbn;
-        do{
+        do {
             System.out.print("Enter isbn: ");
             isbn = scanner.nextLine();
             if (!Utils.isbnValidator(isbn)) {
                 System.out.println("Invalid ISBN. Please try again.");
             }
-        } while(!Utils.isbnValidator(isbn));
+        } while (!Utils.isbnValidator(isbn));
         return isbn;
     }
-    public String getTitle(Scanner scanner){
+
+    public String getTitle(Scanner scanner) {
         String title;
-        do{
+        do {
             System.out.print("Enter title: ");
             title = scanner.nextLine();
             if (!Utils.stringValidator(title)) {
                 System.out.println("Title can not be empty. Please try again.");
             }
-        } while(!Utils.stringValidator(title));
+        } while (!Utils.stringValidator(title));
         return title;
     }
 
-    public String getAuthorName(Scanner scanner){
+    public String getAuthorName(Scanner scanner) {
         String name;
-        do{
+        do {
             System.out.print("Enter author name: ");
             name = scanner.nextLine();
             if (!Utils.stringValidator(name)) {
                 System.out.println("Author can not be empty. Please try again.");
             }
-        } while(!Utils.stringValidator(name));
+        } while (!Utils.stringValidator(name));
         return name;
     }
 
-    public String getAuthorEmail(Scanner scanner){
+    public String getAuthorEmail(Scanner scanner) {
         String email;
-        do{
+        do {
             System.out.print("Enter author email: ");
             email = scanner.nextLine();
             if (!Utils.emailValidator(email)) {
                 System.out.println("Author can not be empty. Please try again.");
             }
-        } while(!Utils.emailValidator(email));
+        } while (!Utils.emailValidator(email));
         return email;
     }
 
-    public int getQuantity(Scanner scanner){
+    public int getQuantity(Scanner scanner) {
         int quantity;
         do {
             System.out.print("Enter number of books: ");
@@ -207,7 +208,7 @@ public class LibraryService {
         return quantity;
     }
 
-    public Categories getCategory(Scanner scanner){
+    public Categories getCategory(Scanner scanner) {
         Categories category = null;
         while (true) {
             System.out.print("Enter category (Available categories: HORROR, SCIENCE, ROMANCE, FICTION, FANTASY, ADVENTURE, BIOGRAPHY, MISTERY, OTHERS): ");
@@ -227,15 +228,15 @@ public class LibraryService {
         return category;
     }
 
-    public String getUsn(Scanner scanner){
+    public String getUsn(Scanner scanner) {
         String usn;
-        do{
+        do {
             System.out.print("Enter USN: ");
             usn = scanner.nextLine();
             if (!Utils.usnValidator(usn)) {
                 System.out.println("Invalid USN. Please try again.");
             }
-        } while(!Utils.usnValidator(usn));
+        } while (!Utils.usnValidator(usn));
         return usn;
     }
 }
