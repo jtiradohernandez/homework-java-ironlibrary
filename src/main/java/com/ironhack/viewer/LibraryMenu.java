@@ -81,10 +81,11 @@ public class LibraryMenu {
                     String category = libraryService.getCategory(scanner).name();
                     try {
                         List<Book> books = libraryService.searchBookByCategory(Categories.valueOf(category));
-                        for (Book book : books) {
-                            System.out.println(book.getIsbn());
-                            System.out.println(book.getTitle());
-                        }
+//                        for (Book book : books) {
+//                            System.out.println(book.getIsbn());
+//                            System.out.println(book.getTitle());
+//                        }
+                        libraryService.printBooksByCategoryOrAuthor(books);
                     } catch (InputMismatchException imm) {
                         System.out.print("Wrong Category ");
                     }
@@ -100,10 +101,11 @@ public class LibraryMenu {
                         //TODO change to isbn validation
                         int authorid = Integer.parseInt(author_id);
                         List<Book> books = libraryService.searchBookByAuthor(authorid);
-                        for (Book book : books) {
-                            System.out.println(book.getIsbn());
-                            System.out.println(book.getTitle());
-                        }
+//                        for (Book book : books) {
+//                            System.out.println(book.getIsbn());
+//                            System.out.println(book.getTitle());
+//                        }
+                        libraryService.printBooksByCategoryOrAuthor(books);
                     } catch (IllegalArgumentException iae) {
                         System.out.println("Author ID should be numeric");
                     }
