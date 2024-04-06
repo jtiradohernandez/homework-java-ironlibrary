@@ -1,6 +1,5 @@
 package com.ironhack.utils;
 
-import java.sql.SQLOutput;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -32,14 +31,11 @@ public class Utils {
 
     /**
      * Validates ISBNs (ISBN-10 and ISBN-13).
-     *
      * ISBN-10 Examples: "0-306-40615-2", "0306406152"
      * ISBN-13 Examples: "978-0-306-40615-7", "9780306406157"
-     *
      * Note:
      * - ISBN-10 is a 10-digit number with or without optional hyphens and might end with an 'X' representing 10.
      * - ISBN-13 is a 13-digit number, prefixed by '978' or '979', with or without optional hyphens.
-     *
      * @param isbn the ISBN string to validate.
      * @return true if the isbn is valid according to ISBN-10 or ISBN-13 standards, false otherwise.
      */
@@ -116,4 +112,17 @@ public class Utils {
         public static String uniqueIdGenerator() {
             return UUID.randomUUID().toString();
         }
+
+    public static boolean usnValidator(String usn) {
+        if (usn == null) return false;
+
+        // USN Regex that matches exactly 13 numeric characters
+        String usnRegex = "^[0-9]{13}$";
+
+        Pattern usnPattern = Pattern.compile(usnRegex);
+        Matcher matcher = usnPattern.matcher(usn);
+
+        // Matches USN against the regex pattern
+        return matcher.matches();
+    }
 }

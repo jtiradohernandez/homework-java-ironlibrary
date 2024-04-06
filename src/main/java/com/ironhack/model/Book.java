@@ -12,9 +12,9 @@ import java.util.Objects;
 @NoArgsConstructor
 @Entity
 @Table(name = "book")
-public class Book implements InputValidator{
+public class Book implements InputValidator {
     @Id
-    @Column(name="isbn")
+    @Column(name = "isbn")
     private String isbn;
 
     private String title;
@@ -35,6 +35,7 @@ public class Book implements InputValidator{
         this.quantity = quantity;
         this.authorBook = author;
     }
+
 
     @Override
     public boolean input_validation() {
@@ -57,7 +58,15 @@ public class Book implements InputValidator{
         return Objects.hash(isbn, title, category, quantity, authorBook);
     }
 
-    public void updateQuantity(int newQuantity){
-        this.quantity+=newQuantity;
+    public void updateQuantity(int newQuantity) {
+        this.quantity += newQuantity;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%nISBN: %s%n" +
+                "Title: %s%n" +
+                "Category: %s%n" +
+                "No of Books: %d%n", isbn, title, category, quantity);
     }
 }
