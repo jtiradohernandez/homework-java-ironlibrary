@@ -1,9 +1,6 @@
 package com.ironhack.service;
 
-import com.ironhack.model.Book;
-import com.ironhack.model.Categories;
-import com.ironhack.model.Issue;
-import com.ironhack.model.Student;
+import com.ironhack.model.*;
 import com.ironhack.repository.AuthorRepository;
 import com.ironhack.repository.BookRepository;
 import com.ironhack.repository.IssueRepository;
@@ -31,6 +28,16 @@ public class LibraryService {
     @Autowired
     StudentRepository studentRepository;
 
+    public void addNewBook(Book book) {
+        Optional<Book> optionalBook = bookRepository.findByIsbn(book.getIsbn());
+        if (optionalBook.isPresent()) {
+            book.setQuantity(book.getQuantity() + 1);
+            bookRepository.save(book);
+        } else {
+            bookRepository.save(book);
+        }
+    }
+
     public Optional<Book> searchBookByTitle(String title) {
         return bookRepository.findBookByTitle(title);
     }
@@ -47,7 +54,7 @@ public class LibraryService {
         return bookRepository.findAll();
     }
 
-    public void issueBook(String usn, String name, String isbn) {
+    public String issueBook(String usn, String name, String isbn) {
         LocalDateTime issueDate = LocalDateTime.now();
         LocalDateTime returnDate = issueDate.plusDays(7);
         String issueDateString = Utils.formatter.format(issueDate);
@@ -63,8 +70,9 @@ public class LibraryService {
             //restar un ejemplar a libro
             book.get().updateQuantity(-1);
             bookRepository.save(book.get());
+            return returnDateString;
         } else {
-            System.out.println("Book is already issued");
+            return null;
         }
     }
 
@@ -77,9 +85,28 @@ public class LibraryService {
         return studentRepository.searchBooksByStudent(usn);
     }
 
-    public Optional<Issue> findIssueByIsbn(String isbn){ return issueRepository.findByIsbn(isbn);}
+    public List<Issue> findIssueByIsbn(String isbn) {
+        return issueRepository.findByIsbn(isbn);
+    }
 
-    public Optional<Book> findBookByIsbn(String isbn){return bookRepository.findByIsbn(isbn);}
+    public List<Issue> findIssueByUsn(String usn) {
+        return issueRepository.findByUsn(usn);
+    }
 
-    public Optional<Student> findStudentByUsn(String usn){return studentRepository.findByUsn(usn);}
+    public Optional<Book> findBookByIsbn(String isbn) {
+        return bookRepository.findByIsbn(isbn);
+    }
+
+    public Optional<Student> findStudentByUsn(String usn) {
+        return studentRepository.findByUsn(usn);
+    }
+
+    public List<Book> findAllBooksWithAuthors() {
+        return bookRepository.findAllBooksWithAuthor();
+    }
+
+    //añadido hoy
+    public Optional<Author> findAuthorByName(String name) {
+        return authorRepository.findByName(name);
+    }
 }

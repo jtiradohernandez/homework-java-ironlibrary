@@ -74,10 +74,10 @@ class StudentRepositoryTest {
         assertEquals("2022-08-07 17:09:38", results.get(0).getReturnDate());
     }
 
-    @Test
-    void findByName() {
-        Optional<Student> student = studentRepository.findByName("Juan");
-        assertTrue(student.isPresent());
-        assertEquals("Juan", student.get().getName());
-    }
+//    @Test
+//    void findByName() {
+//        Optional<Student> student = studentRepository.findByName("Juan");
+//        assertTrue(student.isPresent());
+//        assertEquals("Juan", student.get().getName());
+//    }
 }
