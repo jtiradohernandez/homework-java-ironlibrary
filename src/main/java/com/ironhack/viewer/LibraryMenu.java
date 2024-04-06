@@ -43,26 +43,13 @@ public class LibraryMenu {
             switch (choice) {
                 case 1:
                     // Add Book
-                    //llamar a getIsbn() do While
-                    System.out.print("Enter isbn: ");
-                    String isbnBook = scanner.nextLine();
-                    System.out.print("Enter title: ");
-                    String titleBook = scanner.nextLine();
+                    String isbnBook = libraryService.getIsbn(scanner);
+                    String titleBook = libraryService.getTitle(scanner);
                     System.out.print("Enter category (Available categories: HORROR, SCIENCE, ROMANCE, FICTION, FANTASY, ADVENTURE, BIOGRAPHY, MISTERY, OTHERS");
-                    String categoryInput = scanner.nextLine().toUpperCase();
-                    Categories categoryBook;
-                    try {
-                        categoryBook = Categories.valueOf(categoryInput);
-                    } catch (IllegalArgumentException e) {
-                        System.out.println("Invalid category. Please enter a valid category.");
-                        break;
-                    }
-                    System.out.print("Enter Author name: ");
-                    String authorName = scanner.nextLine();
-                    System.out.print("Enter Author mail: ");
-                    String authorMail = scanner.nextLine();
-                    System.out.print("Enter number of books: ");
-                    int quantity = scanner.nextInt();
+                    Categories categoryBook = libraryService.getCategory(scanner);
+                    String authorName = libraryService.getAuthorName(scanner);
+                    String authorMail = libraryService.getAuthorEmail(scanner);
+                    int quantity = libraryService.getQuantity(scanner);
                     Author author;
                     Optional<Author> optionalAuthor = libraryService.findAuthorByName(authorName);
                     if (optionalAuthor.isPresent()) {
@@ -75,13 +62,13 @@ public class LibraryMenu {
                     try {
                         libraryService.addNewBook(newBook);
                     } catch (IllegalArgumentException iae) {
-                        System.out.println("error");
+                        System.out.println("Something went wrong" + iae.getMessage());
                     }
                     System.out.println("Book was successfully added to library");
                     break;
                 case 2:
-                    System.out.print("Enter title to search: ");
-                    String title = scanner.nextLine();
+//                    System.out.print("Enter title to search: ");
+                    String title = libraryService.getTitle(scanner);
                     Optional<Book> requestedBook = libraryService.searchBookByTitle(title);
                     if (requestedBook.isPresent()) {
                         System.out.println(requestedBook.get());
@@ -90,14 +77,15 @@ public class LibraryMenu {
                     }
                     break;
                 case 3:
-                    System.out.print("Enter a Category to search: ");
-                    String category = scanner.nextLine();
+//                    System.out.print("Enter a Category to search: ");
+                    String category = libraryService.getCategory(scanner).name();
                     try {
                         List<Book> books = libraryService.searchBookByCategory(Categories.valueOf(category));
-                        for (Book book : books) {
-                            System.out.println(book.getIsbn());
-                            System.out.println(book.getTitle());
-                        }
+//                        for (Book book : books) {
+//                            System.out.println(book.getIsbn());
+//                            System.out.println(book.getTitle());
+//                        }
+                        libraryService.printBooksByCategoryOrAuthor(books);
                     } catch (InputMismatchException imm) {
                         System.out.print("Wrong Category ");
                     }
@@ -113,10 +101,11 @@ public class LibraryMenu {
                         //TODO change to isbn validation
                         int authorid = Integer.parseInt(author_id);
                         List<Book> books = libraryService.searchBookByAuthor(authorid);
-                        for (Book book : books) {
-                            System.out.println(book.getIsbn());
-                            System.out.println(book.getTitle());
-                        }
+//                        for (Book book : books) {
+//                            System.out.println(book.getIsbn());
+//                            System.out.println(book.getTitle());
+//                        }
+                        libraryService.printBooksByCategoryOrAuthor(books);
                     } catch (IllegalArgumentException iae) {
                         System.out.println("Author ID should be numeric");
                     }
@@ -125,12 +114,10 @@ public class LibraryMenu {
                     libraryService.printBooks(libraryService.searchAllBooks());
                     break;
                 case 6:
-                    System.out.print("Enter usn:");
-                    String usn = scanner.nextLine();
+                    String usn = libraryService.getUsn(scanner);
                     System.out.print("Enter name:");
                     String name = scanner.nextLine();
-                    System.out.print("Enter book ISBN:");
-                    String isbn = scanner.nextLine();
+                    String isbn = libraryService.getIsbn(scanner);
                     try {
                         //check if student and book exist. Comprobar nombre?????
                         Optional<Student> studentOptional = libraryService.findStudentByUsn(usn);
@@ -156,8 +143,7 @@ public class LibraryMenu {
                     break;
                 case 8:
                     // Search Books By Student
-                    System.out.println("Enter usn:");
-                    String usnSearch = scanner.nextLine();
+                    String usnSearch = libraryService.getUsn(scanner);
                     try {
                         Optional<Student> studentOptional = libraryService.findStudentByUsn(usnSearch);
                         if (studentOptional.isPresent()) {
