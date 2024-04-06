@@ -1,18 +1,17 @@
 package com.ironhack.service;
 
-import com.ironhack.model.Author;
-import com.ironhack.model.Book;
-import com.ironhack.model.Categories;
-import com.ironhack.model.Student;
+import com.ironhack.model.*;
 import com.ironhack.repository.AuthorRepository;
 import com.ironhack.repository.BookRepository;
 import com.ironhack.repository.StudentRepository;
+import com.ironhack.repository.IssueRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,12 +32,17 @@ class LibraryServiceTest {
     @Autowired
     private StudentRepository studentRepository;
 
+    @Autowired
+    private IssueRepository issueRepository;
+
     private Author author1;
     private Author author2;
     private Book book1;
     private Book book2;
     private Student student1;
     private Student student2;
+    private Issue issue1;
+    private Issue issue2;
 
     @BeforeEach
     void setUp() {
@@ -51,6 +55,15 @@ class LibraryServiceTest {
         student1 = new Student("12345678901", "Mosh");
         student2 = new Student("12345678902", "John");
         studentRepository.saveAll(List.of(student1, student2));
+        issue1 = new Issue(LocalDate.now().toString(), LocalDate.now().plusMonths(1).toString());
+        issue1.setIssueBook(book1);
+        issue1.setIssueStudent(student1);
+
+        issue2 = new Issue(LocalDate.now().toString(), LocalDate.now().plusMonths(1).toString());
+        issue2.setIssueBook(book2);
+        issue2.setIssueStudent(student2);
+
+        issueRepository.saveAll(List.of(issue1, issue2));
     }
 
     @Test
@@ -93,8 +106,24 @@ class LibraryServiceTest {
         assertTrue(booksByAuthor2.contains(book2));
     }
 
+    @Test
+    void searchBooksByStudentStringTest() {
+        List<Issue> foundIssues = libraryService.searchBooksByStudentString(student1.getUsn());
+
+        // Verify the correct book issues are retrieved
+        assertNotNull(foundIssues, "The returned list of issues should not be null");
+        assertEquals(1, foundIssues.size(), "Expected one issue to be found for student1");
+
+        // Use getters in Issue for issueBook
+        assertEquals(book1.getIsbn(), foundIssues.get(0).getIssueBook().getIsbn(),
+                "The ISBN of the book in the found issue should match book1's ISBN");
+    }
+
     @AfterEach
     void tearDown() {
+        issueRepository.deleteAll();
         bookRepository.deleteAll();
+        studentRepository.deleteAll();
+        authorRepository.deleteAll();
     }
 }
