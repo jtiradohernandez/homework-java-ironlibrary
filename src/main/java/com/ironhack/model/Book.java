@@ -46,16 +46,14 @@ public class Book implements InputValidator {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Book book)) return false;
-        return quantity == book.quantity && Objects.equals(isbn, book.isbn) &&
-                Objects.equals(title, book.title) && category == book.category &&
-                authorBook.getAuthorId() == book.authorBook.getAuthorId() && Objects.equals(authorBook.getName(), book.authorBook.getName()) &&
-                book.authorBook.getEmail().equals(authorBook.getEmail());
+        if (o == null || getClass() != o.getClass()) return false;
+        Book book = (Book) o;
+        return Objects.equals(isbn, book.isbn);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(isbn, title, category, quantity, authorBook);
+        return Objects.hash(isbn);
     }
 
     public void updateQuantity(int newQuantity) {

@@ -13,18 +13,20 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDate;
 import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.*;
+import java.util.Optional;
+
 @SpringBootTest
 class LibraryServiceTest {
+
+    @Autowired
+    private LibraryService libraryService;
+
     @Autowired
     private BookRepository bookRepository;
 
     @Autowired
     private AuthorRepository authorRepository;
-
-    @Autowired
-    private LibraryService libraryService;
 
     @Autowired
     private IssueRepository issueRepository;
@@ -39,6 +41,7 @@ class LibraryServiceTest {
     Student student2;
     private Issue issue1;
     private Issue issue2;
+
     @BeforeEach
     void setUp() {
         author1 = new Author("Corey Schafer","corey@mail.com");
@@ -60,7 +63,6 @@ class LibraryServiceTest {
 
         issueRepository.saveAll(List.of(issue1, issue2));
     }
-
     @AfterEach
     void tearDown() {
         issueRepository.deleteAll();
@@ -68,6 +70,60 @@ class LibraryServiceTest {
         studentRepository.deleteAll();
         authorRepository.deleteAll();
     }
+
+    @Test
+    void addNewBook() {
+        libraryService.addNewBook(book1);
+        Optional<Book> optionalBook = bookRepository.findByIsbn(book1.getIsbn());
+        assertTrue(optionalBook.isPresent());
+        assertEquals(book1.getIsbn(), optionalBook.get().getIsbn());
+    }
+
+    @Test
+    void searchBookByTitle() {
+        Optional<Book> optionalBook = libraryService.searchBookByTitle("Java is awesome");
+
+        assertTrue(optionalBook.isPresent());
+        assertEquals("Java is awesome", optionalBook.get().getTitle());
+    }
+
+    @Test
+    void searchBookByCategory() {
+        // Use the searchBookByCategory method to retrieve the books
+        List<Book> books = libraryService.searchBookByCategory(Categories.HORROR);
+
+        // Assert that the books returned by the method are the same as the books you saved
+        assertEquals(1, books.size());
+        assertTrue(books.contains(book1));
+    }
+
+    @Test
+    void searchBookByAuthor() {
+        // Use the searchBookByAuthor method to retrieve the books
+        List<Book> booksByAuthor1 = libraryService.searchBookByAuthor(author1.getAuthorId());
+        List<Book> booksByAuthor2 = libraryService.searchBookByAuthor(author2.getAuthorId());
+
+        // Assert that the books returned by the method are the same as the books you saved
+        assertEquals(1, booksByAuthor1.size());
+        assertTrue(booksByAuthor1.contains(book1));
+
+        assertEquals(1, booksByAuthor2.size());
+        assertTrue(booksByAuthor2.contains(book2));
+    }
+
+    @Test
+    void searchBooksByStudentStringTest() {
+        List<Issue> foundIssues = libraryService.searchBooksByStudentString(student1.getUsn());
+
+        // Verify the correct book issues are retrieved
+        assertNotNull(foundIssues, "The returned list of issues should not be null");
+        assertEquals(1, foundIssues.size(), "Expected one issue to be found for student1");
+
+        // Use getters in Issue for issueBook
+        assertEquals(book1.getIsbn(), foundIssues.get(0).getIssueBook().getIsbn(),
+                "The ISBN of the book in the found issue should match book1's ISBN");
+    }
+
     @Test
     void isBookIssuedTest(){
         Author author3 = new Author("original author", "newemail@mail.com");
@@ -102,3 +158,6 @@ class LibraryServiceTest {
         assertNull(returnDate);
     }
 }
+
+
+
