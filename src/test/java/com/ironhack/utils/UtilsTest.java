@@ -76,4 +76,13 @@ class UtilsTest {
         String uniqueId2 = Utils.uniqueIdGenerator();
         Assertions.assertNotEquals(uniqueId1, uniqueId2);
     }
+
+    @Test
+    void usnValidator(){
+        assertTrue(Utils.usnValidator("12345678901"));
+        assertTrue(Utils.usnValidator("98765432101"));
+
+        assertFalse(Utils.usnValidator("123"));
+        assertFalse(Utils.usnValidator(null));
+    }
 }
