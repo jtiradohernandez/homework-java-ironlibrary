@@ -109,4 +109,34 @@ public class LibraryService {
     public Optional<Author> findAuthorByName(String name) {
         return authorRepository.findByName(name);
     }
+
+    public void printBooks(List<Book> books) {
+        if (books.isEmpty()) {
+            System.out.println("No books found.");
+        } else {
+            System.out.println("Book ISBN           Book Title      Category      No of Books     Author name           Author mail ");
+            for (Book book : books) {
+                System.out.printf("%-20s %-15s %-12s %-15s %-20s %s%n",
+                        book.getIsbn(),
+                        book.getTitle(),
+                        book.getCategory(),
+                        book.getQuantity(),
+                        book.getAuthorBook().getName(),
+                        book.getAuthorBook().getEmail());
+            }
+        }
+    }
+
+    public void printBook(Book book) {
+        if (book == null) {
+            System.out.println("Book not found.");
+        } else {
+            System.out.println("Book ISBN           Book Title      Category      No of Books");
+            System.out.printf("%-20s %-15s %-12s %-15s %-20s %s%n",
+                    book.getIsbn(),
+                    book.getTitle(),
+                    book.getCategory(),
+                    book.getQuantity());
+        }
+    }
 }
