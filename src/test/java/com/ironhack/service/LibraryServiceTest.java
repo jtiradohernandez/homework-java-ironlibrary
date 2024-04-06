@@ -3,7 +3,10 @@ package com.ironhack.service;
 import com.ironhack.model.Author;
 import com.ironhack.model.Book;
 import com.ironhack.model.Categories;
+import com.ironhack.model.Student;
+import com.ironhack.repository.AuthorRepository;
 import com.ironhack.repository.BookRepository;
+import com.ironhack.repository.StudentRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -24,50 +27,70 @@ class LibraryServiceTest {
     @Autowired
     private BookRepository bookRepository;
 
-    private Book book;
+    @Autowired
+    private AuthorRepository authorRepository;
+
+    @Autowired
+    private StudentRepository studentRepository;
+
+    private Author author1;
+    private Author author2;
+    private Book book1;
+    private Book book2;
+    private Student student1;
+    private Student student2;
 
     @BeforeEach
     void setUp() {
-
-    Author author = new Author("Xavi Moreno", "xavi.moreno@example.com");
-    book = new Book("978-3-16-148410-0", "Test Book", Categories.ADVENTURE, 10, author);
-    bookRepository.save(book);
+        author1 = new Author("Corey Schafer","corey@mail.com");
+        author2 = new Author("Antonio Gámez","antonio@mail.com");
+        book1 = new Book("978-1-123456-12-7","Java is awesome", Categories.HORROR,8,author1);
+        book2 = new Book("978-1-123456-12-6","SLA Driven Governance of RESTful systems", Categories.SCIENCE,5,author2);
+        authorRepository.saveAll(List.of(author1, author2));
+        bookRepository.saveAll(List.of(book1, book2));
+        student1 = new Student("12345678901", "Mosh");
+        student2 = new Student("12345678902", "John");
+        studentRepository.saveAll(List.of(student1, student2));
     }
 
     @Test
     void addNewBook() {
-        libraryService.addNewBook(book);
-        Optional<Book> optionalBook = bookRepository.findByIsbn(book.getIsbn());
+        libraryService.addNewBook(book1);
+        Optional<Book> optionalBook = bookRepository.findByIsbn(book1.getIsbn());
         assertTrue(optionalBook.isPresent());
-        assertEquals(book.getIsbn(), optionalBook.get().getIsbn());
+        assertEquals(book1.getIsbn(), optionalBook.get().getIsbn());
     }
 
     @Test
     void searchBookByTitle() {
-        Optional<Book> optionalBook = libraryService.searchBookByTitle("Test Book");
+        Optional<Book> optionalBook = libraryService.searchBookByTitle("Java is awesome");
 
         assertTrue(optionalBook.isPresent());
-        assertEquals("Test Book", optionalBook.get().getTitle());
+        assertEquals("Java is awesome", optionalBook.get().getTitle());
     }
 
     @Test
     void searchBookByCategory() {
-        // Save a few books to the repository
-        Author author = new Author("Test Author", "test.author@example.com");
-        Book book1 = new Book("978-3-16-148410-0", "Test Book 1", Categories.ADVENTURE, 10, author);
-        Book book2 = new Book("978-3-16-148410-1", "Test Book 2", Categories.ADVENTURE, 10, author);
-        Book book3 = new Book("978-3-16-148410-2", "Test Book 3", Categories.ROMANCE, 10, author);
-        bookRepository.save(book1);
-        bookRepository.save(book2);
-        bookRepository.save(book3);
-
         // Use the searchBookByCategory method to retrieve the books
-        List<Book> books = libraryService.searchBookByCategory(Categories.ADVENTURE);
+        List<Book> books = libraryService.searchBookByCategory(Categories.HORROR);
 
         // Assert that the books returned by the method are the same as the books you saved
-        assertEquals(2, books.size());
+        assertEquals(1, books.size());
         assertTrue(books.contains(book1));
-        assertTrue(books.contains(book2));
+    }
+
+    @Test
+    void searchBookByAuthor() {
+        // Use the searchBookByAuthor method to retrieve the books
+        List<Book> booksByAuthor1 = libraryService.searchBookByAuthor(author1.getAuthorId());
+        List<Book> booksByAuthor2 = libraryService.searchBookByAuthor(author2.getAuthorId());
+
+        // Assert that the books returned by the method are the same as the books you saved
+        assertEquals(1, booksByAuthor1.size());
+        assertTrue(booksByAuthor1.contains(book1));
+
+        assertEquals(1, booksByAuthor2.size());
+        assertTrue(booksByAuthor2.contains(book2));
     }
 
     @AfterEach
