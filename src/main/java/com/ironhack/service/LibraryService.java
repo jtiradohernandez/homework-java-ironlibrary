@@ -180,18 +180,6 @@ public class LibraryService {
         return title;
     }
 
-    public String getAuthorName(Scanner scanner) {
-        String name;
-        do {
-            System.out.print("Enter author name: ");
-            name = scanner.nextLine();
-            if (!Utils.stringValidator(name)) {
-                System.out.println("Author can not be empty. Please try again.");
-            }
-        } while (!Utils.stringValidator(name));
-        return name;
-    }
-
     public String getAuthorEmail(Scanner scanner) {
         String email;
         do {
@@ -202,6 +190,18 @@ public class LibraryService {
             }
         } while (!Utils.emailValidator(email));
         return email;
+    }
+
+    public String getName(Scanner scanner, String promptMessage, String errorMessage) {
+        String name;
+        do {
+            System.out.print(promptMessage);
+            name = scanner.nextLine();
+            if (!Utils.stringValidator(name)) {
+                System.out.println(errorMessage);
+            }
+        } while (!Utils.stringValidator(name));
+        return name;
     }
 
     public int getQuantity(Scanner scanner) {

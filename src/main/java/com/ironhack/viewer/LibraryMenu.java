@@ -47,7 +47,7 @@ public class LibraryMenu {
                     String titleBook = libraryService.getTitle(scanner);
                     System.out.print("Enter category (Available categories: HORROR, SCIENCE, ROMANCE, FICTION, FANTASY, ADVENTURE, BIOGRAPHY, MISTERY, OTHERS");
                     Categories categoryBook = libraryService.getCategory(scanner);
-                    String authorName = libraryService.getAuthorName(scanner);
+                    String authorName = libraryService.getName(scanner, "Enter author name: ", "Author name can not be empty. Please try again.");
                     String authorMail = libraryService.getAuthorEmail(scanner);
                     int quantity = libraryService.getQuantity(scanner);
                     Author author;
@@ -67,7 +67,6 @@ public class LibraryMenu {
                     System.out.println("Book was successfully added to library");
                     break;
                 case 2:
-//                    System.out.print("Enter title to search: ");
                     String title = libraryService.getTitle(scanner);
                     Optional<Book> requestedBook = libraryService.searchBookByTitle(title);
                     if (requestedBook.isPresent()) {
@@ -77,14 +76,9 @@ public class LibraryMenu {
                     }
                     break;
                 case 3:
-//                    System.out.print("Enter a Category to search: ");
                     String category = libraryService.getCategory(scanner).name();
                     try {
                         List<Book> books = libraryService.searchBookByCategory(Categories.valueOf(category));
-//                        for (Book book : books) {
-//                            System.out.println(book.getIsbn());
-//                            System.out.println(book.getTitle());
-//                        }
                         libraryService.printBooksByCategoryOrAuthor(books);
                     } catch (InputMismatchException imm) {
                         System.out.print("Wrong Category ");
@@ -101,10 +95,6 @@ public class LibraryMenu {
                         //TODO change to isbn validation
                         int authorid = Integer.parseInt(author_id);
                         List<Book> books = libraryService.searchBookByAuthor(authorid);
-//                        for (Book book : books) {
-//                            System.out.println(book.getIsbn());
-//                            System.out.println(book.getTitle());
-//                        }
                         libraryService.printBooksByCategoryOrAuthor(books);
                     } catch (IllegalArgumentException iae) {
                         System.out.println("Author ID should be numeric");
@@ -115,11 +105,10 @@ public class LibraryMenu {
                     break;
                 case 6:
                     String usn = libraryService.getUsn(scanner);
-                    System.out.print("Enter name:");
-                    String name = scanner.nextLine();
+                    String name = libraryService.getName(scanner, "Enter student name: ", "Student name can not be empty. Please try again.");
                     String isbn = libraryService.getIsbn(scanner);
                     try {
-                        //check if student and book exist. Comprobar nombre?????
+                        //check if student and book exist.
                         Optional<Student> studentOptional = libraryService.findStudentByUsn(usn);
                         Optional<Book> bookOptional = libraryService.findBookByIsbn(isbn);
                         if (studentOptional.isPresent() && bookOptional.isPresent()) {
