@@ -32,8 +32,8 @@ public class LibraryService {
     public void addNewBook(Book book) {
         Optional<Book> optionalBook = bookRepository.findByIsbn(book.getIsbn());
         if (optionalBook.isPresent()) {
-            book.setQuantity(book.getQuantity() + 1);
-            bookRepository.save(book);
+            optionalBook.get().updateQuantity(book.getQuantity());
+            bookRepository.save(optionalBook.get());
         } else {
             bookRepository.save(book);
         }
