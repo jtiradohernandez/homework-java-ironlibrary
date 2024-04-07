@@ -128,7 +128,7 @@ public class Utils {
         if (input == null) return false;
 
         // Numeric Regex that matches integer numbers
-        String numericRegex = "^[1-9]+$";
+        String numericRegex = "^[1-9]\\d*$";
 
         Pattern numericPattern = Pattern.compile(numericRegex);
         Matcher matcher = numericPattern.matcher(input);
