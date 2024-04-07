@@ -36,6 +36,7 @@ public class Utils {
      * Note:
      * - ISBN-10 is a 10-digit number with or without optional hyphens and might end with an 'X' representing 10.
      * - ISBN-13 is a 13-digit number, prefixed by '978' or '979', with or without optional hyphens.
+     *
      * @param isbn the ISBN string to validate.
      * @return true if the isbn is valid according to ISBN-10 or ISBN-13 standards, false otherwise.
      */
@@ -85,9 +86,9 @@ public class Utils {
      * Assumes both dates have been validated and are in the correct format.
      *
      * @param startDate the start date in "dd/MM/yyyy" format.
-     * @param endDate the end date in "dd/MM/yyyy" format.
+     * @param endDate   the end date in "dd/MM/yyyy" format.
      * @return an Optional containing the difference in days between the start and end dates,
-     *         or an empty Optional if either date is in an invalid format.
+     * or an empty Optional if either date is in an invalid format.
      */
     public static Optional<Long> dateDifferenceCalculator(String startDate, String endDate) {
         if (!validateDateFormat(startDate) || !validateDateFormat(endDate)) {
@@ -103,15 +104,12 @@ public class Utils {
     }
 
 
-
-
-
-        /**
-         * Generates a unique identifier, for example, for use with entities that don't have an auto-generated ID.
-         */
-        public static String uniqueIdGenerator() {
-            return UUID.randomUUID().toString();
-        }
+    /**
+     * Generates a unique identifier, for example, for use with entities that don't have an auto-generated ID.
+     */
+    public static String uniqueIdGenerator() {
+        return UUID.randomUUID().toString();
+    }
 
     public static boolean usnValidator(String usn) {
         if (usn == null) return false;
@@ -123,6 +121,19 @@ public class Utils {
         Matcher matcher = usnPattern.matcher(usn);
 
         // Matches USN against the regex pattern
+        return matcher.matches();
+    }
+
+    public static boolean numericValidator(String input) {
+        if (input == null) return false;
+
+        // Numeric Regex that matches integer numbers
+        String numericRegex = "^[1-9]+$";
+
+        Pattern numericPattern = Pattern.compile(numericRegex);
+        Matcher matcher = numericPattern.matcher(input);
+
+        // Matches input against the regex pattern
         return matcher.matches();
     }
 }

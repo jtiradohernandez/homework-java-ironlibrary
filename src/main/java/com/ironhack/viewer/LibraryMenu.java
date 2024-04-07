@@ -44,12 +44,11 @@ public class LibraryMenu {
                 case 1:
                     // Add Book
                     String isbnBook = libraryService.getIsbn(scanner);
-                    String titleBook = libraryService.getTitle(scanner);
-                    System.out.print("Enter category (Available categories: HORROR, SCIENCE, ROMANCE, FICTION, FANTASY, ADVENTURE, BIOGRAPHY, MISTERY, OTHERS");
+                    String titleBook = libraryService.getString(scanner, "Enter title: ", "Title can not be empty. Please try again.");
                     Categories categoryBook = libraryService.getCategory(scanner);
-                    String authorName = libraryService.getName(scanner, "Enter author name: ", "Author name can not be empty. Please try again.");
+                    String authorName = libraryService.getString(scanner, "Enter author name: ", "Author name can not be empty. Please try again.");
                     String authorMail = libraryService.getAuthorEmail(scanner);
-                    int quantity = libraryService.getQuantity(scanner);
+                    int quantity = libraryService.getNumber(scanner, "Enter number of books: ", "Invalid input. Please enter a positive quantity.");
                     Author author;
                     Optional<Author> optionalAuthor = libraryService.findAuthorByName(authorName);
                     if (optionalAuthor.isPresent()) {
@@ -67,7 +66,7 @@ public class LibraryMenu {
                     System.out.println("Book was successfully added to library");
                     break;
                 case 2:
-                    String title = libraryService.getTitle(scanner);
+                    String title = libraryService.getString(scanner, "Enter title: ", "Title can not be empty. Please try again.");
                     Optional<Book> requestedBook = libraryService.searchBookByTitle(title);
                     if (requestedBook.isPresent()) {
                         System.out.println(requestedBook.get());
@@ -89,23 +88,16 @@ public class LibraryMenu {
 
                     break;
                 case 4:
-                    System.out.print("Enter an Author ID:");
-                    String author_id = scanner.nextLine();
-                    try {
-                        //TODO change to isbn validation
-                        int authorid = Integer.parseInt(author_id);
-                        List<Book> books = libraryService.searchBookByAuthor(authorid);
-                        libraryService.printBooksByCategoryOrAuthor(books);
-                    } catch (IllegalArgumentException iae) {
-                        System.out.println("Author ID should be numeric");
-                    }
+                    int author_id = libraryService.getNumber(scanner, "Enter Author ID: ", "Invalid input. Please enter a positive numeric value.");
+                    List<Book> books = libraryService.searchBookByAuthor(author_id);
+                    libraryService.printBooksByCategoryOrAuthor(books);
                     break;
                 case 5:
                     libraryService.printBooks(libraryService.searchAllBooks());
                     break;
                 case 6:
                     String usn = libraryService.getUsn(scanner);
-                    String name = libraryService.getName(scanner, "Enter student name: ", "Student name can not be empty. Please try again.");
+                    String name = libraryService.getString(scanner, "Enter student name: ", "Student name can not be empty. Please try again.");
                     String isbn = libraryService.getIsbn(scanner);
                     try {
                         //check if student and book exist.

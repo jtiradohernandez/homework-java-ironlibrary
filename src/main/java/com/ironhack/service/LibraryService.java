@@ -143,19 +143,6 @@ public class LibraryService {
         }
     }
 
-    public void printBook(Book book) {
-        if (book == null) {
-            System.out.println("Book not found.");
-        } else {
-            System.out.println("Book ISBN           Book Title      Category      No of Books");
-            System.out.printf("%-20s %-15s %-12s %-15s %-20s %s%n",
-                    book.getIsbn(),
-                    book.getTitle(),
-                    book.getCategory(),
-                    book.getQuantity());
-        }
-    }
-
     public String getIsbn(Scanner scanner) {
         String isbn;
         do {
@@ -168,59 +155,28 @@ public class LibraryService {
         return isbn;
     }
 
-    public String getTitle(Scanner scanner) {
-        String title;
-        do {
-            System.out.print("Enter title: ");
-            title = scanner.nextLine();
-            if (!Utils.stringValidator(title)) {
-                System.out.println("Title can not be empty. Please try again.");
-            }
-        } while (!Utils.stringValidator(title));
-        return title;
-    }
-
     public String getAuthorEmail(Scanner scanner) {
         String email;
         do {
             System.out.print("Enter author email: ");
             email = scanner.nextLine();
             if (!Utils.emailValidator(email)) {
-                System.out.println("Author can not be empty. Please try again.");
+                System.out.println("Invalid author email. Please try again.");
             }
         } while (!Utils.emailValidator(email));
         return email;
     }
 
-    public String getName(Scanner scanner, String promptMessage, String errorMessage) {
-        String name;
+    public String getString(Scanner scanner, String promptMessage, String errorMessage) {
+        String input;
         do {
             System.out.print(promptMessage);
-            name = scanner.nextLine();
-            if (!Utils.stringValidator(name)) {
+            input = scanner.nextLine();
+            if (!Utils.stringValidator(input)) {
                 System.out.println(errorMessage);
             }
-        } while (!Utils.stringValidator(name));
-        return name;
-    }
-
-    public int getQuantity(Scanner scanner) {
-        int quantity;
-        do {
-            System.out.print("Enter number of books: ");
-            if (scanner.hasNextInt()) {
-                quantity = scanner.nextInt();
-                if (quantity >= 0) {
-                    break;
-                } else {
-                    System.out.println("Number of books can't be negative. Please try again.");
-                }
-            } else {
-                System.out.println("Invalid input. Please enter a numeric value.");
-                scanner.next(); // Consume invalid input
-            }
-        } while (true);
-        return quantity;
+        } while (!Utils.stringValidator(input));
+        return input;
     }
 
     public Categories getCategory(Scanner scanner) {
@@ -253,5 +209,17 @@ public class LibraryService {
             }
         } while (!Utils.usnValidator(usn));
         return usn;
+    }
+
+    public int getNumber(Scanner scanner, String promptMessage, String errorMessage) {
+        String input;
+        do {
+            System.out.print(promptMessage);
+            input = scanner.nextLine();
+            if (!Utils.numericValidator(input)) {
+                System.out.println(errorMessage);
+            }
+        } while (!Utils.numericValidator(input));
+        return Integer.parseInt(input);
     }
 }
