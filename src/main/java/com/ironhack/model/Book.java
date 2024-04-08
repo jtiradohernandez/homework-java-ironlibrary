@@ -24,7 +24,7 @@ public class Book implements InputValidator {
 
     private int quantity;
 
-    @OneToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "author_id")
     private Author authorBook;
 
