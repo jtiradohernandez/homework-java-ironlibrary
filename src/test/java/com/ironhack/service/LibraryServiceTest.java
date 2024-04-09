@@ -185,4 +185,18 @@ class LibraryServiceTest {
         assertTrue(optionalStudent2.isPresent());
         assertEquals(student2.getUsn(), optionalStudent2.get().getUsn());
     }
+
+    @Test
+    void testFindAuthorByName() {
+        // Use the findAuthorByName method to retrieve the authors
+        Optional<Author> optionalAuthor1 = libraryService.findAuthorByName(author1.getName());
+        Optional<Author> optionalAuthor2 = libraryService.findAuthorByName(author2.getName());
+
+        // Assert that the author returned by the method is the same as the author you saved
+        assertTrue(optionalAuthor1.isPresent());
+        assertEquals(author1.getName(), optionalAuthor1.get().getName());
+
+        assertTrue(optionalAuthor2.isPresent());
+        assertEquals(author2.getName(), optionalAuthor2.get().getName());
+    }
 }
