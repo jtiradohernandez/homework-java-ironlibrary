@@ -171,4 +171,18 @@ class LibraryServiceTest {
         assertTrue(optionalBook2.isPresent());
         assertEquals(book2.getIsbn(), optionalBook2.get().getIsbn());
     }
+
+    @Test
+    void testFindStudentByUsn() {
+        // Use the findStudentByUsn method to retrieve the students
+        Optional<Student> optionalStudent1 = libraryService.findStudentByUsn(student1.getUsn());
+        Optional<Student> optionalStudent2 = libraryService.findStudentByUsn(student2.getUsn());
+
+        // Assert that the student returned by the method is the same as the student you saved
+        assertTrue(optionalStudent1.isPresent());
+        assertEquals(student1.getUsn(), optionalStudent1.get().getUsn());
+
+        assertTrue(optionalStudent2.isPresent());
+        assertEquals(student2.getUsn(), optionalStudent2.get().getUsn());
+    }
 }
