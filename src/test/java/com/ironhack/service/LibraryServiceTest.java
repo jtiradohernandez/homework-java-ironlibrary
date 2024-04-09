@@ -3,8 +3,8 @@ package com.ironhack.service;
 import com.ironhack.model.*;
 import com.ironhack.repository.AuthorRepository;
 import com.ironhack.repository.BookRepository;
-import com.ironhack.repository.StudentRepository;
 import com.ironhack.repository.IssueRepository;
+import com.ironhack.repository.StudentRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,9 +13,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
-
 import static org.junit.jupiter.api.Assertions.*;
+import java.util.Optional;
 
 @SpringBootTest
 class LibraryServiceTest {
@@ -30,17 +29,16 @@ class LibraryServiceTest {
     private AuthorRepository authorRepository;
 
     @Autowired
-    private StudentRepository studentRepository;
-
-    @Autowired
     private IssueRepository issueRepository;
 
-    private Author author1;
-    private Author author2;
-    private Book book1;
-    private Book book2;
-    private Student student1;
-    private Student student2;
+    @Autowired
+    private StudentRepository studentRepository;
+    Author author1;
+    Author author2;
+    Book book1;
+    Book book2;
+    Student student1;
+    Student student2;
     private Issue issue1;
     private Issue issue2;
 
@@ -64,6 +62,13 @@ class LibraryServiceTest {
         issue2.setIssueStudent(student2);
 
         issueRepository.saveAll(List.of(issue1, issue2));
+    }
+    @AfterEach
+    void tearDown() {
+        issueRepository.deleteAll();
+        bookRepository.deleteAll();
+        studentRepository.deleteAll();
+        authorRepository.deleteAll();
     }
 
     @Test
@@ -119,11 +124,37 @@ class LibraryServiceTest {
                 "The ISBN of the book in the found issue should match book1's ISBN");
     }
 
-    @AfterEach
-    void tearDown() {
-        issueRepository.deleteAll();
-        bookRepository.deleteAll();
-        studentRepository.deleteAll();
-        authorRepository.deleteAll();
+    @Test
+    void isBookIssuedTest(){
+        Author author3 = new Author("original author", "newemail@mail.com");
+        authorRepository.save(author3);
+        Book bookZeroQuantity = new Book("123-5-567890-00-0", "No books lefts", Categories.ADVENTURE, 0, author3);
+        bookRepository.save(bookZeroQuantity);
+        assertTrue(libraryService.isBookIssued(bookZeroQuantity.getIsbn()));
+        assertFalse(libraryService.isBookIssued(book1.getIsbn()));
+    }
+
+    @Test
+    void issueBookTestValid(){
+        Author author4 = new Author("another author", "newermail@mail.com");
+        authorRepository.save(author4);
+        Book bookToIssue = new Book("123-5-567890-12-3", "Book to issue", Categories.ADVENTURE, 5, author4);
+        bookRepository.save(bookToIssue);
+        String returnDate = libraryService.issueBook("12345678901", "Book to issue", "123-5-567890-12-3");
+        List<Issue> results = libraryService.findIssueByIsbn("978-1-123456-12-7");
+        assertNotNull(results);
+        assertEquals("Java is awesome", results.getFirst().getIssueBook().getTitle());
+        assertEquals("12345678901", results.getFirst().getIssueStudent().getUsn());
+        assertNotNull(returnDate);
+    }
+
+    @Test
+    void issueBookTest_OutOfStock(){
+        Author author5 = new Author("nuevo", "email@mail.com");
+        authorRepository.save(author5);
+        Book outOfStockBook = new Book("978-1-123456-10-5","Libro agotado2", Categories.FANTASY,0,author5);
+        bookRepository.save(outOfStockBook);
+        String returnDate = libraryService.issueBook("12345678901", "Libro agotado2", "978-1-123456-10-5");
+        assertNull(returnDate);
     }
 }
