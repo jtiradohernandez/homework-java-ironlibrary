@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -70,14 +69,8 @@ class StudentRepositoryTest {
 
         assertNotNull(results);
         assertEquals(2, results.size());
-        assertEquals("Harry Potter", results.get(0).getIssueBook().getTitle());
-        assertEquals("2022-08-07 17:09:38", results.get(0).getReturnDate());
+        assertEquals("Harry Potter", results.getFirst().getIssueBook().getTitle());
+        assertEquals("2022-08-07 17:09:38", results.getFirst().getReturnDate());
     }
 
-//    @Test
-//    void findByName() {
-//        Optional<Student> student = studentRepository.findByName("Juan");
-//        assertTrue(student.isPresent());
-//        assertEquals("Juan", student.get().getName());
-//    }
 }

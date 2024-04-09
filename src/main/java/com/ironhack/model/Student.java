@@ -3,7 +3,6 @@ package com.ironhack.model;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.ArrayList;
@@ -15,7 +14,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "student")
 @Data
-public class Student implements InputValidator {
+public class Student {
     @Id
     private String usn;
     private String name;
@@ -53,9 +52,4 @@ public class Student implements InputValidator {
         return Objects.hash(usn, name);
     }
 
-    @Override
-    public boolean input_validation() {
-        //añadir logica de validacion name
-        return false;
-    }
 }
