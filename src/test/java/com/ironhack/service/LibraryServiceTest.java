@@ -157,4 +157,18 @@ class LibraryServiceTest {
         String returnDate = libraryService.issueBook("12345678901", "Libro agotado2", "978-1-123456-10-5");
         assertNull(returnDate);
     }
+
+    @Test
+    void testFindBookByIsbn() {
+        // Use the findBookByIsbn method to retrieve the book
+        Optional<Book> optionalBook1 = libraryService.findBookByIsbn(book1.getIsbn());
+        Optional<Book> optionalBook2 = libraryService.findBookByIsbn(book2.getIsbn());
+
+        // Assert that the book returned by the method is the same as the book you saved
+        assertTrue(optionalBook1.isPresent());
+        assertEquals(book1.getIsbn(), optionalBook1.get().getIsbn());
+
+        assertTrue(optionalBook2.isPresent());
+        assertEquals(book2.getIsbn(), optionalBook2.get().getIsbn());
+    }
 }
