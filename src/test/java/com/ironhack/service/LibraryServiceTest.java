@@ -157,4 +157,46 @@ class LibraryServiceTest {
         String returnDate = libraryService.issueBook("12345678901", "Libro agotado2", "978-1-123456-10-5");
         assertNull(returnDate);
     }
+
+    @Test
+    void testFindBookByIsbn() {
+        // Use the findBookByIsbn method to retrieve the book
+        Optional<Book> optionalBook1 = libraryService.findBookByIsbn(book1.getIsbn());
+        Optional<Book> optionalBook2 = libraryService.findBookByIsbn(book2.getIsbn());
+
+        // Assert that the book returned by the method is the same as the book you saved
+        assertTrue(optionalBook1.isPresent());
+        assertEquals(book1.getIsbn(), optionalBook1.get().getIsbn());
+
+        assertTrue(optionalBook2.isPresent());
+        assertEquals(book2.getIsbn(), optionalBook2.get().getIsbn());
+    }
+
+    @Test
+    void testFindStudentByUsn() {
+        // Use the findStudentByUsn method to retrieve the students
+        Optional<Student> optionalStudent1 = libraryService.findStudentByUsn(student1.getUsn());
+        Optional<Student> optionalStudent2 = libraryService.findStudentByUsn(student2.getUsn());
+
+        // Assert that the student returned by the method is the same as the student you saved
+        assertTrue(optionalStudent1.isPresent());
+        assertEquals(student1.getUsn(), optionalStudent1.get().getUsn());
+
+        assertTrue(optionalStudent2.isPresent());
+        assertEquals(student2.getUsn(), optionalStudent2.get().getUsn());
+    }
+
+    @Test
+    void testFindAuthorByName() {
+        // Use the findAuthorByName method to retrieve the authors
+        Optional<Author> optionalAuthor1 = libraryService.findAuthorByName(author1.getName());
+        Optional<Author> optionalAuthor2 = libraryService.findAuthorByName(author2.getName());
+
+        // Assert that the author returned by the method is the same as the author you saved
+        assertTrue(optionalAuthor1.isPresent());
+        assertEquals(author1.getName(), optionalAuthor1.get().getName());
+
+        assertTrue(optionalAuthor2.isPresent());
+        assertEquals(author2.getName(), optionalAuthor2.get().getName());
+    }
 }
