@@ -12,7 +12,7 @@ import java.util.Objects;
 @NoArgsConstructor
 @Entity
 @Table(name = "author")
-public class Author implements InputValidator {
+public class Author {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int authorId;
@@ -24,18 +24,12 @@ public class Author implements InputValidator {
         setEmail(email);
     }
 
-
-    @Override
-    public boolean input_validation() {
-        return false;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Author author = (Author) o;
-        return authorId == author.authorId && Objects.equals(name, author.name) && email == author.email;
+        return authorId == author.authorId && Objects.equals(name, author.name) && Objects.equals(email, author.email);
     }
 
     @Override

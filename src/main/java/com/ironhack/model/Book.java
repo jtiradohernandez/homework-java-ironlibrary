@@ -12,7 +12,7 @@ import java.util.Objects;
 @NoArgsConstructor
 @Entity
 @Table(name = "book")
-public class Book implements InputValidator {
+public class Book {
     @Id
     @Column(name = "isbn")
     private String isbn;
@@ -35,13 +35,6 @@ public class Book implements InputValidator {
         this.quantity = quantity;
         this.authorBook = author;
     }
-
-
-    @Override
-    public boolean input_validation() {
-        return false;
-    }
-
 
     @Override
     public boolean equals(Object o) {
